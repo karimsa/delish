@@ -1,0 +1,1 @@
+{"version":3,"sources":["css/base.css"],"names":[],"mappings":"AAOA,UAEE,YAAa,AACb,UAAY,CACb","file":"bundle.css","sourcesContent":["/**\n * src/css/base.css\n *\n * Licensed under MIT license.\n * Copyright (C) 2017 Karim Alibhai.\n */\n\nhtml,\nbody {\n  height: 100%;\n  width: 100%;\n}"]}

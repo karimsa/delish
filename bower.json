@@ -1,0 +1,22 @@
+{
+  "name": "delish",
+  "description": "Find your love. Then eat it.",
+  "main": "index.html",
+  "authors": [
+    "Karim Alibhai"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/karimsa/delish",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "skeleton": "^2.0.4"
+  }
+}

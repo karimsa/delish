@@ -8,9 +8,11 @@
 
 import SearchCtl from './controllers/search'
 
-export default (resolve, reject) => {
+export default exceptionHandler => (resolve, reject) => {
   try {
     const app = angular.module('delish', ['ngRoute', 'ngAnimate'])
+
+    app.factory('$exceptionHandler', () => exceptionHandler)
 
     app.config(['$routeProvider', '$locationProvider', ($router, $location) => {
       $router
@@ -25,6 +27,8 @@ export default (resolve, reject) => {
     }])
 
     app.controller('SearchCtl', SearchCtl)
+
+    angular.element(() => angular.bootstrap(document, ['delish']))
   } catch (err) {
     reject(err)
   }

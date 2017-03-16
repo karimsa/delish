@@ -18,7 +18,6 @@ let currentLog = document.querySelector('.lead')
  */
 export default debounce(function () {
   let text = util.format.apply(util, arguments)
-  console.warn(text)
 
   // transition to the new log
   nextLog.innerText = text

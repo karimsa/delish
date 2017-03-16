@@ -5,10 +5,10 @@
  * Copyright (C) 2017 Karim Alibhai.
  */
 
-const BROWSER_JS_FILES = [ 'public/src/**/*.js' ]
+const BROWSER_JS_FILES = [ 'public/src/js/*.js', 'public/src/js/**/*.js' ]
 const NODE_JS_FILES = [ '*.js', '!gulpfile.js' ]
 const JS_FILES = [].concat(BROWSER_JS_FILES, NODE_JS_FILES)
-const CSS_FILES = [ 'public/src/**/*.css' ]
+const CSS_FILES = [ 'public/src/css/mixins.pcss', 'public/src/css/*.pcss' ]
 
 const gulp = require('gulp')
     , glob = require('glob')
@@ -72,6 +72,6 @@ gulp.task('css', () =>
 gulp.task('default', ['css', 'js'])
 
 gulp.task('watch', () => {
-    gulp.watch(JS_FILES, ['js'])
+    gulp.watch(JS_FILES.concat([ 'public/src/js/**/*.json' ]), ['js'])
     gulp.watch(CSS_FILES, ['css'])
 })

@@ -12,8 +12,9 @@ import Map from './map'
  * Promise-ify Google map success.
  */
 const mapReady = new Promise(resolve => {
-  window.initMap = resolve
-})
+        window.initMap = resolve
+      })
+    , loading = document.querySelector('.loading-screen')
 
 /**
  * List of tasks, in the order that they
@@ -31,7 +32,7 @@ const tasks = {
     mapReady.then(() => {
       let map = document.createElement('div')
       map.id = 'map'
-      document.body.appendChild(map)
+      document.body.insertBefore(map, loading)
       window.Map = new Map(map)
 
       resolve()
@@ -42,7 +43,6 @@ const tasks = {
 /**
  * Handle task failure.
  */
-const loading = document.querySelector('.loading-screen')
 function fail(err) {
   log(String(err))
   loading.classList.add('error')
@@ -51,7 +51,6 @@ function fail(err) {
 /**
  * Executes tasks sequentionally.
  */
-let i = -1
 function next() {
   i += 1
 
@@ -72,4 +71,5 @@ function next() {
 }
 
 // start task execution, soon
+let i = -1
 setTimeout(next, 0)

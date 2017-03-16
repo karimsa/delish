@@ -32,7 +32,7 @@ export default debounce(function () {
     parent.removeChild(currentLog)
     currentLog = nextLog
 
-    nextLog = document.createElement('div')
+    nextLog = document.createElement('p')
     nextLog.classList.add('lead')
     nextLog.classList.add('next')
     parent.appendChild(nextLog)

@@ -1,4 +1,8 @@
 language: node_js
 node_js: 7
 script:
- - gulp && npm test
+- gulp && npm test
+deploy:
+  provider: heroku
+  api_key:
+    secure: nhb4Ng8XJUztTeRyg5FjJd4/uSN2fbZb0/2Ec3TXk4W1wvsVcuC60QILgT7ICQ9GpzicraMfop8aqNLfSb3DRz+Uz+s8LYFeJ2cnhqhXNyQZU1PZdzx3bfBF4MCHc2ADEu8mOrl+N3K/Zp1V1d0vb09x0LP3JAaaw6USouX+d2Mxkre6mjQU7cE7lJH2qkwteOY5G4TTGv+GJhXapyYM2OtDM7cWKVO9CtfXSHd4UvNy6Y0COBJ6VF6+21tcL9KiFBGqB+LDuYQZVDkVBv2kkHaomVodQjRy5CH/AmEsm8EfRwXv/X4IigEmtLGaWn0rxZpWjlB6928gljiruWLyrOWzjDfmj69Pf/kIeP4+rKGfqI3QvK8Tydz3fCob4cDR34fdrGDwCCMA8q8L2M9kbbLsP2tSWT7Qrz5SVFhoVlSU75abIZlHXLoT+qNPIF6rClNNX0FbJyDt1Q7Yfv9yPHp9IGOm0AkKQKewIVIm/mP6aeL+RTQNtXNIJgbye/U1NhazxZu8jkjMvde8+WRgQG2Scay5ksOS3sFKIcPTgWC8r5Ll+8/tf+kaCGLBxRVg/4sOucu8/3BqdOs02fjHDqtl8F0j5ep4gja1+eRlvylwQ0kVyO/i1vQuD7O02OnnLV+eDABCBgV1E3VaIGz8QdnyItYt24VuBnz7SDHffrw=

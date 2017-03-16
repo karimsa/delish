@@ -16,13 +16,15 @@
   background: #d50000;
 }
 
-.loading .loading-screen {
+.loading .loading-screen,
+.error .loading-screen {
   opacity: 1;
 }
 
 .loading-screen,
 .loading-screen.error,
-.loading .loading-screen {
+.loading .loading-screen,
+.error .loading-screen {
   transition: .7s opacity ease, .7s background ease;
 }
 
@@ -32,7 +34,7 @@
   word-break: break-word;
 }
 
-html:not(.error) .lead {
+html:not(.error) .loading-screen .lead {
   position: fixed;
 }
 
@@ -41,14 +43,9 @@ html:not(.error) .lead {
   opacity: 0;
 }
 
-.loading-screen .lead.next,
-.loading-screen .lead.error-msg {
+.loading-screen .lead.next {
   margin-top: 3rem;
   opacity: 0;
-}
-
-.error .lead.error-msg {
-  opacity: 1;
 }
 
 .loading-screen .lead {
@@ -58,7 +55,7 @@ html:not(.error) .lead {
 
 .loading-screen .lead,
 .loading-screen .lead.next {
-  transition: .7s all ease;
+  transition: .7s margin-top ease, .7s opacity ease;
 }
 
 .doh {
@@ -69,11 +66,11 @@ html:not(.error) .lead {
   width: 25%;
 }
 
-.loading.error .doh {
+.error .doh {
   display: block;
 }
 
-.error .lead:first-child {
+.error .lead.error-msg {
   font-size: 1.5rem;
   font-weight: 700;
 }

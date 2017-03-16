@@ -8,16 +8,13 @@
 import log from './logger'
 import Map from './map'
 import createApp from './app'
-import { Buffer } from 'buffer'
 
 /**
  * Promise-ify Google map success.
  */
 const mapReady = new Promise(resolve => {
-        window.initMap = resolve
-      })
-    , loading = document.querySelector('.loading-screen')
-    , errorMsg = document.querySelector('.loading-screen .error-msg')
+  window.initMap = resolve
+})
 
 /**
  * List of tasks, in the order that they
@@ -36,7 +33,7 @@ const tasks = {
     mapReady.then(() => {
       let map = document.createElement('div')
       map.id = 'map'
-      document.body.insertBefore(map, loading)
+      document.body.insertBefore(map, document.body.children[0])
       window.Map = new Map(map)
 
       resolve()
@@ -51,21 +48,30 @@ const tasks = {
    * Not actually wrapping up. This brings up the app
    * via angular.
    */
-  'Wrapping up': createApp
+  'Wrapping up': createApp((error, cause) => {
+    fail(JSON.stringify({
+      error: {
+        stack: String(error.stack),
+        message: String(error)
+      },
+      cause
+    }))
+  })
 }
 
 /**
  * Handle task failure.
  */
 function fail(err) {
-  log('Things have gone horribly wrong. I think your computer is going to explode. But what do I know, I\'m just an error message.')
-  
-  let leadClasses = document.querySelector('.lead.next').classList
-  leadClasses.add('col-8')
-  leadClasses.add('offset-2')
-  errorMsg.innerHTML = Buffer.from(err.stack || String(err), 'utf8').toString('base64')
+  console.error(JSON.parse(err))
 
   document.documentElement.classList.add('error')
+
+  log(logElm => {
+    logElm.classList.add('error-msg')
+    logElm.classList.add('col-8')
+    logElm.classList.add('offset-2')
+  }, 'Things have gone horribly wrong. I think your computer is going to explode. But what do I know, I\'m just an error message.')
 }
 
 /**
@@ -79,10 +85,6 @@ function next() {
 
     setTimeout(() => {
       document.documentElement.classList.remove('loading')
-
-      setTimeout(() => {
-        document.body.removeChild(loading)
-      }, 700)
     }, 2000)
   } else {
     let text = tasks.order[i]

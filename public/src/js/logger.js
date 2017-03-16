@@ -13,11 +13,19 @@ let currentLog = document.querySelector('.lead')
 
 /**
  * Updates the current log status.
+ * @param {?Function} done a callback to execute if the log happens
  * @param {String} message the string with formatting
  * @param {...Object} values any values to plug in
  */
-export default debounce(function () {
-  let text = util.format.apply(util, arguments)
+export default debounce(function (done) {
+  let text
+
+  if (typeof done === 'function') {
+    text = util.format.apply(util, [].slice.call(arguments, 1))
+  } else {
+    text = util.format.apply(util, arguments)
+    done = () => 0
+  }
 
   // transition to the new log
   nextLog.innerText = text
@@ -37,4 +45,7 @@ export default debounce(function () {
     nextLog.classList.add('next')
     parent.appendChild(nextLog)
   }, 700)
+
+  // return reference to the log element used
+  done(nextLog)
 }, 700)

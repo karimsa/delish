@@ -9,7 +9,8 @@
   "scripts": {
     "start": "node index.js",
     "postinstall": "./node_modules/.bin/bower install",
-    "watch": "concurrently 'node index.js' 'gulp watch'"
+    "watch": "concurrently 'node index.js' 'gulp watch'",
+    "test": "echo \"There aren't actually any unit tests ...\" && exit 1"
   },
   "repository": {
     "type": "git",

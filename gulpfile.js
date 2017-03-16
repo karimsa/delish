@@ -12,7 +12,6 @@ const CSS_FILES = [ 'public/src/css/mixins.pcss', 'public/src/css/*.pcss' ]
 
 const gulp = require('gulp')
     , glob = require('glob')
-    , babel = require('gulp-babel')
     , eslint = require('gulp-eslint')
     , concat = require('gulp-concat')
     , uglify = require('gulp-uglify')
@@ -42,17 +41,19 @@ gulp.task('lint:node', () =>
 
 gulp.task('lint', ['lint:browser', 'lint:node'])
 
-gulp.task('js', ['lint'], () =>
+gulp.task('build:js', () =>
   browserify(BROWSER_JS_FILES.map(a => glob.sync(a)))
+      .transform('babelify')
       .bundle()
       .pipe(source('bundle.js'))
       .pipe(buffer())
       .pipe(sourcemaps.init())
-      .pipe(babel())
       .pipe(uglify())
       .pipe(sourcemaps.write('.'))
       .pipe(gulp.dest('./public/dist/js'))
 )
+
+gulp.task('js', ['lint', 'build:js'])
 
 gulp.task('css', () =>
   gulp.src(CSS_FILES)

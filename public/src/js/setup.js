@@ -1,12 +1,12 @@
 /**
- * public/src/js/prep.js - delish
+ * public/src/js/setup/index.js - delish
  * 
  * Licensed under MIT license.
  * Copyright (C) 2017 Karim Alibhai.
  */
 
-import log from './logger'
-import Map from './map'
+import log from '../logger'
+import Map from '../map'
 
 /**
  * Promise-ify Google map success.
@@ -59,6 +59,10 @@ function next() {
 
     setTimeout(() => {
       document.documentElement.classList.remove('loading')
+
+      setTimeout(() => {
+        document.body.removeChild(loading)
+      }, 700)
     }, 2000)
   } else {
     let text = tasks.order[i]

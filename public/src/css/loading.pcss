@@ -6,8 +6,14 @@
  */
 
 .loading-screen {
+  @mixin topleft;
+
   background: #24282b;
   opacity: 0;
+}
+
+.error .loading-screen {
+  background: #d50000;
 }
 
 .loading .loading-screen {
@@ -15,14 +21,19 @@
 }
 
 .loading-screen,
+.loading-screen.error,
 .loading .loading-screen {
-  transition: .7s opacity ease;
+  transition: .7s opacity ease, .7s background ease;
 }
 
-.loading-screen p {
-  position: fixed;
+.loading-screen .lead {
   width: 100%;
   color: #fff;
+  word-break: break-word;
+}
+
+html:not(.error) .lead {
+  position: fixed;
 }
 
 .loading-screen .lead.hide {
@@ -30,9 +41,14 @@
   opacity: 0;
 }
 
-.loading-screen .lead.next {
+.loading-screen .lead.next,
+.loading-screen .lead.error-msg {
   margin-top: 3rem;
   opacity: 0;
+}
+
+.error .lead.error-msg {
+  opacity: 1;
 }
 
 .loading-screen .lead {
@@ -42,5 +58,22 @@
 
 .loading-screen .lead,
 .loading-screen .lead.next {
-  transition: .7s margin-top ease, .7s opacity ease;
+  transition: .7s all ease;
+}
+
+.doh {
+  position: absolute;
+  right: 5px;
+  bottom: -5px;
+  display: none;
+  width: 25%;
+}
+
+.loading.error .doh {
+  display: block;
+}
+
+.error .lead:first-child {
+  font-size: 1.5rem;
+  font-weight: 700;
 }

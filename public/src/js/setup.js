@@ -7,6 +7,7 @@
 
 import log from './logger'
 import Map from './map'
+import { Buffer } from 'buffer'
 
 /**
  * Promise-ify Google map success.
@@ -15,6 +16,7 @@ const mapReady = new Promise(resolve => {
         window.initMap = resolve
       })
     , loading = document.querySelector('.loading-screen')
+    , errorMsg = document.querySelector('.loading-screen .error-msg')
 
 /**
  * List of tasks, in the order that they
@@ -44,8 +46,14 @@ const tasks = {
  * Handle task failure.
  */
 function fail(err) {
-  log(String(err))
-  loading.classList.add('error')
+  log('Things have gone horribly wrong. I think your computer is going to explode. But what do I know, I\'m just an error message.')
+  
+  let leadClasses = document.querySelector('.lead.next').classList
+  leadClasses.add('col-8')
+  leadClasses.add('offset-2')
+  errorMsg.innerHTML = Buffer.from(err.stack || String(err), 'utf8').toString('base64')
+
+  document.documentElement.classList.add('error')
 }
 
 /**

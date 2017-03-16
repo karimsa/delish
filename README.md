@@ -1,4 +1,16 @@
-# delish
+<p align="center">
+  <img alt="(pretty picture)" src="public/favicon.png" />
+</p>
+
+<h1 align="center">
+  <a href="https://github.com/karimsa/delish">DELISH</a>
+</h1>
+
+<p align="center">
+  <a href="https://travis-ci.org/karimsa/delish">
+    <img src="https://travis-ci.org/karimsa/delish.svg?branch=master" />
+  </a>
+</p>
 
 Find your love. Then eat it.
 

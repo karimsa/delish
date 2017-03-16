@@ -8,7 +8,8 @@
   },
   "scripts": {
     "start": "node index.js",
-    "postinstall": "./node_modules/.bin/bower install",
+    "postinstall": "./node_modules/.bin/bower install && npm run setup",
+    "setup": "[ \"$NODE_ENV\" == \"production\" ] || ./node_modules/precommit/bin/cli.js install",
     "watch": "concurrently 'node index.js' 'gulp watch'",
     "test": "echo \"There aren't actually any unit tests ...\" && exit 1"
   },

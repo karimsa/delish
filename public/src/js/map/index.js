@@ -6,12 +6,14 @@
  */
 /* globals google */
 
+import MapOptions from './options'
+
 /**
  * Map wrapper. For easier handling.
  */
 export default class Map {
   constructor (elm) {
-    this.map = new google.maps.Map(elm, require('./options'))
+    this.map = new google.maps.Map(elm, MapOptions)
   }
 
   /**

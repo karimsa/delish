@@ -5,7 +5,7 @@
  * Copyright (C) 2017 Karim Alibhai.
  */
 
-module.exports = {
+export default {
   /**
    * Default zoom of 16 allows user to see streets.
    */

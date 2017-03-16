@@ -41,6 +41,10 @@ const tasks = {
 
       resolve()
     }).catch(reject)
+
+    let script = document.createElement('script')
+    script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDP65fNhrgLMP9Gu20ATUn2CxwPQErxngQ&callback=initMap'
+    document.body.appendChild(script)
   },
 
   /**

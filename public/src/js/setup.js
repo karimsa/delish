@@ -4,6 +4,7 @@
  * Licensed under MIT license.
  * Copyright (C) 2017 Karim Alibhai.
  */
+/* globals trackJs */
 
 import log from './logger'
 import Map from './map'
@@ -48,22 +49,14 @@ const tasks = {
    * Not actually wrapping up. This brings up the app
    * via angular.
    */
-  'Wrapping up': createApp((error, cause) => {
-    fail(JSON.stringify({
-      error: {
-        stack: String(error.stack),
-        message: String(error)
-      },
-      cause
-    }))
-  })
+  'Wrapping up': createApp(fail)
 }
 
 /**
  * Handle task failure.
  */
-function fail(err) {
-  console.error(JSON.parse(err))
+export function fail(err) {
+  trackJs.track(err)
 
   document.documentElement.classList.add('error')
 

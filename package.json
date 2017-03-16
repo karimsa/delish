@@ -28,6 +28,7 @@
     "babelify": "^7.3.0",
     "concurrently": "^3.4.0",
     "cssnano": "^3.10.0",
+    "debounce": "^1.0.0",
     "eslint-config-strict": "^13.0.0",
     "glob": "^7.1.1",
     "gulp": "^3.9.1",

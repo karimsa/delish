@@ -6,6 +6,7 @@
  */
 
 const util = require('util')
+    , debounce = require('debounce')
 
 let currentLog = document.querySelector('.lead')
   , nextLog = document.querySelector('.lead.next')
@@ -15,8 +16,9 @@ let currentLog = document.querySelector('.lead')
  * @param {String} message the string with formatting
  * @param {...Object} values any values to plug in
  */
-export default function () {
+export default debounce(function () {
   let text = util.format.apply(util, arguments)
+  console.warn(text)
 
   // transition to the new log
   nextLog.innerText = text
@@ -36,4 +38,4 @@ export default function () {
     nextLog.classList.add('next')
     parent.appendChild(nextLog)
   }, 700)
-}
+}, 700)

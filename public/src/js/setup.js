@@ -5,8 +5,8 @@
  * Copyright (C) 2017 Karim Alibhai.
  */
 
-import log from '../logger'
-import Map from '../map'
+import log from './logger'
+import Map from './map'
 
 /**
  * Promise-ify Google map success.

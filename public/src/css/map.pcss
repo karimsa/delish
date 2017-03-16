@@ -1,0 +1,26 @@
+/**
+ * src/css/map.pcss
+ *
+ * Licensed under MIT license.
+ * Copyright (C) 2017 Karim Alibhai.
+ */
+
+body {
+  background: #24282b;
+}
+
+#map {
+  @mixin full;
+  @mixin topleft;
+
+  opacity: .3;
+}
+
+.map-focus #map {
+  opacity: 1;
+}
+
+#map,
+.map-focus {
+  transition: .7s opacity ease;
+}

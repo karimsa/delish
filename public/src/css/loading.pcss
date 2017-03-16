@@ -1,0 +1,45 @@
+/**
+ * src/css/loading.pcss
+ *
+ * Licensed under MIT license.
+ * Copyright (C) 2017 Karim Alibhai.
+ */
+
+.loading-screen {
+  opacity: 0;
+}
+
+.loading .loading-screen {
+  opacity: 1;
+}
+
+.loading-screen,
+.loading .loading-screen {
+  transition: .7s opacity ease;
+}
+
+.loading-screen p {
+  position: fixed;
+  width: 100%;
+  color: #fff;
+}
+
+.loading-screen .lead.hide {
+  margin-top: -3rem;
+  opacity: 0;
+}
+
+.loading-screen .lead.next {
+  margin-top: 3rem;
+  opacity: 0;
+}
+
+.loading-screen .lead {
+  margin-top: 0;
+  opacity: 1;
+}
+
+.loading-screen .lead,
+.loading-screen .lead.next {
+  transition: .7s margin-top ease, .7s opacity ease;
+}

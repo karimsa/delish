@@ -1,2 +1,6 @@
-body,html{height:100%;width:100%}
+
+.fullish,body,html{width:100%;height:100%}.fullish{display:table}.fullish>div{display:table-cell;vertical-align:middle}
+.loading-screen{opacity:0}.loading .loading-screen{opacity:1}.loading-screen,.loading .loading-screen{transition:opacity .7s ease}.loading-screen p{position:fixed;width:100%;color:#fff}.loading-screen .lead.hide{margin-top:-3rem;opacity:0}.loading-screen .lead.next{margin-top:3rem;opacity:0}.loading-screen .lead{margin-top:0;opacity:1}.loading-screen .lead,.loading-screen .lead.next{transition:margin-top .7s ease,opacity .7s ease}
+body{background:#24282b}#map{width:100%;height:100%;position:absolute;top:0;left:0;opacity:.3}.map-focus #map{opacity:1}#map,.map-focus{transition:opacity .7s ease}
+.search{width:100%;height:100%;position:absolute;top:0;left:0}.search h1,.search p{color:#fff}.search h1{font-size:5rem}.search p{font-size:1.5rem;letter-spacing:.2rem;text-transform:uppercase}.search input[type=text]{padding:.8rem 1rem;font-size:1.3rem}
 /*# sourceMappingURL=bundle.css.map */

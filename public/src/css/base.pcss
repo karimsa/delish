@@ -1,0 +1,21 @@
+/**
+ * src/css/base.pcss
+ *
+ * Licensed under MIT license.
+ * Copyright (C) 2017 Karim Alibhai.
+ */
+
+html,
+body {
+  @mixin full;
+}
+
+.fullish {
+  display: table;
+  @mixin full;
+}
+
+.fullish > div {
+  display: table-cell;
+  vertical-align: middle;
+}

@@ -7,6 +7,7 @@
 
 import log from './logger'
 import Map from './map'
+import createApp from './app'
 import { Buffer } from 'buffer'
 
 /**
@@ -24,7 +25,8 @@ const mapReady = new Promise(resolve => {
  */
 const tasks = {
   order: [
-    'Creating sexy map'
+    'Creating sexy map',
+    'Wrapping up'
   ],
 
   /**
@@ -39,7 +41,13 @@ const tasks = {
 
       resolve()
     }).catch(reject)
-  }
+  },
+
+  /**
+   * Not actually wrapping up. This brings up the app
+   * via angular.
+   */
+  'Wrapping up': createApp
 }
 
 /**

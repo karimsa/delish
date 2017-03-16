@@ -17,6 +17,9 @@
     "tests"
   ],
   "dependencies": {
-    "bootstrap": "v4.0.0-alpha.6"
+    "bootstrap": "v4.0.0-alpha.6",
+    "angular": "^1.6.3",
+    "angular-route": "^1.6.3",
+    "angular-animate": "^1.6.3"
   }
 }

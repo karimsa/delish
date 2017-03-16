@@ -6,11 +6,13 @@
  */
 
 html,
-body {
+body,
+[ng-view] {
   @mixin full;
 }
 
-.fullish {
+.fullish,
+[ng-view] {
   display: table;
   @mixin full;
 }

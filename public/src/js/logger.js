@@ -11,7 +11,9 @@ let currentLog = document.querySelector('.lead')
   , nextLog = document.querySelector('.lead.next')
 
 /**
- * Update the current log status.
+ * Updates the current log status.
+ * @param {String} message the string with formatting
+ * @param {...Object} values any values to plug in
  */
 export default function () {
   let text = util.format.apply(util, arguments)

@@ -18,6 +18,7 @@ const gulp = require('gulp')
     , buffer = require('vinyl-buffer')
     , postcss = require('gulp-postcss')
     , browserify = require('browserify')
+    , stylelint = require('gulp-stylelint')
     , source = require('vinyl-source-stream')
     , sourcemaps = require('gulp-sourcemaps')
 
@@ -39,7 +40,7 @@ gulp.task('lint:node', () =>
       .pipe(eslint.failAfterError())
 )
 
-gulp.task('lint', ['lint:browser', 'lint:node'])
+gulp.task('lint:js', ['lint:browser', 'lint:node'])
 
 gulp.task('build:js', () =>
   browserify({
@@ -56,9 +57,20 @@ gulp.task('build:js', () =>
       .pipe(gulp.dest('./public/dist/js'))
 )
 
-gulp.task('js', ['lint', 'build:js'])
+gulp.task('js', ['lint:js', 'build:js'])
 
-gulp.task('css', () =>
+gulp.task('lint:css', () =>
+  gulp.src(CSS_FILES)
+      .pipe(stylelint({
+        failAfterError: true,
+        reporters: [{
+          formatter: 'string',
+          console: true
+        }]
+      }))
+)
+
+gulp.task('css', ['lint:css'], () =>
   gulp.src(CSS_FILES)
       .pipe(sourcemaps.init())
       .pipe(postcss([
@@ -68,9 +80,9 @@ gulp.task('css', () =>
           }),
           require('cssnano')()
        ]))
-      .pipe(concat('bundle.css'))
-      .pipe(sourcemaps.write('.'))
-      .pipe(gulp.dest('./public/dist/css'))
+       .pipe(concat('bundle.css'))
+       .pipe(sourcemaps.write('.'))
+       .pipe(gulp.dest('./public/dist/css'))
 )
 
 gulp.task('default', ['css', 'js'])

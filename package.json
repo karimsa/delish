@@ -11,10 +11,11 @@
     "postinstall": "./node_modules/.bin/bower install && npm run setup",
     "setup": "if [ -z \"$NODE_ENV\" ] || [ \"$NODE_ENV\" == \"production\" ]; then ./node_modules/precommit/bin/cli.js install; fi",
     "watch": "concurrently 'node index.js' 'gulp watch'",
+    "pretest": "gulp lint:css lint:js",
     "test": "echo \"There aren't actually any unit tests ... but let's pass.\""
   },
   "precommit": [
-    "gulp"
+    "npm run pretest"
   ],
   "repository": {
     "type": "git",

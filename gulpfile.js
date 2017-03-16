@@ -18,6 +18,7 @@ const gulp = require('gulp')
     , buffer = require('vinyl-buffer')
     , postcss = require('gulp-postcss')
     , browserify = require('browserify')
+    , imagemin = require('gulp-imagemin')
     , stylelint = require('gulp-stylelint')
     , source = require('vinyl-source-stream')
     , sourcemaps = require('gulp-sourcemaps')
@@ -85,7 +86,13 @@ gulp.task('css', ['lint:css'], () =>
        .pipe(gulp.dest('./public/dist/css'))
 )
 
-gulp.task('default', ['css', 'js'])
+gulp.task('img', () =>
+  gulp.src([ 'public/src/img/*', 'public/src/img/**/*' ])
+      .pipe(imagemin())
+      .pipe(gulp.dest('./public/dist/img'))
+)
+
+gulp.task('default', ['css', 'js', 'img'])
 
 gulp.task('watch', () => {
     gulp.watch(JS_FILES.concat([ 'public/src/js/**/*.json' ]), ['js'])

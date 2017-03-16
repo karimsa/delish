@@ -42,7 +42,10 @@ gulp.task('lint:node', () =>
 gulp.task('lint', ['lint:browser', 'lint:node'])
 
 gulp.task('build:js', () =>
-  browserify(BROWSER_JS_FILES.map(a => glob.sync(a)))
+  browserify({
+    entries: BROWSER_JS_FILES.map(a => glob.sync(a)),
+    debug: true
+  })
       .transform('babelify')
       .bundle()
       .pipe(source('bundle.js'))

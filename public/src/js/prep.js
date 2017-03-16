@@ -59,7 +59,7 @@ function next() {
 
     setTimeout(() => {
       document.documentElement.classList.remove('loading')
-    }, 1000)
+    }, 2000)
   } else {
     let text = tasks.order[i]
     log(text + ' ...')

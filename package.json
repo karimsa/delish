@@ -12,6 +12,9 @@
     "watch": "concurrently 'node index.js' 'gulp watch'",
     "test": "echo \"There aren't actually any unit tests ...\" && exit 1"
   },
+  "precommit": [
+    "gulp"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/karimsa/delish.git"
@@ -39,6 +42,7 @@
     "gulp-sourcemaps": "^2.4.1",
     "gulp-stylelint": "^3.9.0",
     "gulp-uglify": "^2.1.0",
+    "precommit": "^1.2.2",
     "precss": "^1.4.0",
     "stylelint": "^7.9.0",
     "stylelint-config-suitcss": "^10.0.0",

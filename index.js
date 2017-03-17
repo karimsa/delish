@@ -5,6 +5,8 @@
  * Copyright (C) 2017 Karim Alibhai.
  */
 
+require('babel-register')
+
 const cluster = require('cluster')
 const CONCURRENCY = process.env.WEB_CONCURRENCY || 1
 

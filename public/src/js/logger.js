@@ -4,6 +4,7 @@
  * Licensed under MIT license.
  * Copyright (C) 2017 Karim Alibhai.
  */
+/* globals trackJs */
 
 const util = require('util')
     , debounce = require('debounce')
@@ -17,7 +18,7 @@ let currentLog = document.querySelector('.lead')
  * @param {String} message the string with formatting
  * @param {...Object} values any values to plug in
  */
-export default debounce(function (done) {
+export const log = debounce(function (done) {
   let text
 
   if (typeof done === 'function') {
@@ -49,3 +50,18 @@ export default debounce(function (done) {
   // return reference to the log element used
   done(nextLog)
 }, 700)
+
+/**
+ * Handle task failure.
+ */
+export function fail(err) {
+  trackJs.track(err)
+
+  document.documentElement.classList.add('error')
+
+  log(logElm => {
+    logElm.classList.add('error-msg')
+    logElm.classList.add('col-8')
+    logElm.classList.add('offset-2')
+  }, 'Things have gone horribly wrong. I think your computer is going to explode. But what do I know, I\'m just an error message.')
+}

@@ -4,9 +4,8 @@
  * Licensed under MIT license.
  * Copyright (C) 2017 Karim Alibhai.
  */
-/* globals trackJs */
 
-import log from './logger'
+import { log, fail } from './logger'
 import Map from './map'
 import createApp from './app'
 
@@ -50,21 +49,6 @@ const tasks = {
    * via angular.
    */
   'Wrapping up': createApp(fail)
-}
-
-/**
- * Handle task failure.
- */
-export function fail(err) {
-  trackJs.track(err)
-
-  document.documentElement.classList.add('error')
-
-  log(logElm => {
-    logElm.classList.add('error-msg')
-    logElm.classList.add('col-8')
-    logElm.classList.add('offset-2')
-  }, 'Things have gone horribly wrong. I think your computer is going to explode. But what do I know, I\'m just an error message.')
 }
 
 /**

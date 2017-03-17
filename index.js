@@ -15,5 +15,6 @@ if (cluster.isMaster) {
     cluster.fork()
   }
 } else {
+  require('./lib/env')
   require('./lib')
 }

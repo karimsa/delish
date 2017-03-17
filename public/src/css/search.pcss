@@ -5,11 +5,6 @@
  * Copyright (C) 2017 Karim Alibhai.
  */
 
-.search {
-  @mixin full;
-  @mixin topleft;
-}
-
 .search h1,
 .search p {
   color: #fff;
@@ -28,4 +23,33 @@
 .search input[type="text"] {
   padding: .8rem 1rem;
   font-size: 1.3rem;
+}
+
+.map-view .search-wrapper {
+  z-index: -1;
+  opacity: 0;
+}
+
+.search-wrapper,
+.map-view .search-wrapper {
+  transition: .7s z-index ease, .7s opacity ease;
+}
+
+.search-hint {
+  position: absolute;
+  bottom: .5rem;
+  left: .5rem;
+
+  color: #fff;
+  opacity: 0;
+}
+
+.map-view .search-hint {
+  z-index: 1000;
+  opacity: 1;
+}
+
+.map-view #map {
+  z-index: 1000;
+  opacity: .8;
 }

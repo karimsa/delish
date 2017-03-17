@@ -8,8 +8,14 @@
 .loading-screen {
   @mixin topleft;
 
+  z-index: -1;
   background: #24282b;
   opacity: 0;
+}
+
+.loading .loading-screen,
+.error .loading-screen {
+  z-index: 1000;
 }
 
 .error .loading-screen {

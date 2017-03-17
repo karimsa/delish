@@ -25,5 +25,18 @@ export default {
    * Gets rid of the UI provided by Google Maps, with
    * the exception of their terms of use and logo.
    */
-  disableDefaultUI: true
+  disableDefaultUI: true,
+
+  /**
+   * We disable default keyboard shortcuts so all keyboard
+   * shortcuts can be handled by the application.
+   */
+  keyboardShortcuts: false,
+
+  /**
+   * The zoom control is a nice part of the UI, it helps
+   * users control the zoom in more ways than just by using
+   * their mouse & scroll.
+   */
+  zoomControl: true
 }

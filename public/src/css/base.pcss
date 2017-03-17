@@ -9,6 +9,7 @@ html,
 body,
 [ng-view] {
   @mixin full;
+  overflow: hidden;
 }
 
 .fullish,
@@ -17,7 +18,12 @@ body,
   @mixin full;
 }
 
+[ng-view] > .wrapper,
 .fullish > div {
   display: table-cell;
   vertical-align: middle;
+}
+
+[ng-view] {
+  @mixin topleft;
 }

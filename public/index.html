@@ -15,7 +15,20 @@
   <link rel="stylesheet" href="dist/css/bundle.css">
 </head>
 <body>
-  <div ng-view></div>
+  <div class="navbar navbar-toggleable-sm fixed-top">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#search-form" aria-controls="search-form" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <a href="/" class="navbar-brand">DELISH</a>
+
+    <div class="collapse navbar-collapse" id="search-form">
+      <form class="form-inline navbar-right col-sm-4 col-12" ng-controller="SearchCtl">
+        <input type="text" class="form-control hintish" ng-value="prediction()">
+        <input type="text" class="form-control input" ng-model="query" ng-change="search(query)" placeholder="Find your taste">
+      </form>
+    </div>
+  </div>
 
   <div class="loading-screen fullish text-center">
     <div>

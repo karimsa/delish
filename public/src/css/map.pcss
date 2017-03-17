@@ -6,25 +6,16 @@
  */
 
 body {
-  background: #24282b;
+  background: #414f4b;
 }
 
 #map {
   @mixin full;
   @mixin topleft;
 
-  opacity: .3;
+  opacity: .7;
 }
 
 .loading #map {
   z-index: -1;
-}
-
-.map-focus #map {
-  opacity: 1;
-}
-
-#map,
-.map-focus {
-  transition: .7s opacity ease;
 }

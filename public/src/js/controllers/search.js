@@ -4,29 +4,34 @@
  * Licensed under MIT license.
  * Copyright (C) 2017 Karim Alibhai.
  */
-/* globals $ */
 
-export default ['$scope', $scope => {
-  $scope.test = 'hi'
+import sock from '../socket'
+import debounce from 'debounce'
+import getCurrentLocation from '../location'
 
-  let search = $('[ng-model="query"]')
-    , docElm = $(document.documentElement)
-
-  // handle blur on search
-  search.on('blur', evt => {
-    evt.preventDefault()
-    docElm.addClass('map-view')
-  })
-
-  docElm.on('keyup', evt => {
-    if (docElm.is('.map-view')) {
-      evt.preventDefault()
-      search.val(String.fromCharCode(evt.which))
-      docElm.removeClass('map-view')
-      setTimeout(() => search.focus(), 0)
+export default ['$scope', '$searchParams', ($scope, $searchParams) => {
+  $scope.search = debounce(query => {
+    if (!query) {
+      $scope.hint = ''
+      return $scope.$apply()
     }
-  })
 
-  // start with forced focus
-  setTimeout(() => search.focus(), 0)
+    let { lat, lng } = getCurrentLocation()
+
+    sock.emit('autocomplete', {
+      query,
+      lat,
+      lng,
+      radius: $searchParams.radius
+    })
+  }, 500)
+
+  $scope.prediction = () => {
+    return $scope.hint && $scope.query ? $scope.query + $scope.hint.substr($scope.query.length) : ''
+  }
+
+  sock.on('autocomplete:results', result => {
+    $scope.hint = result
+    $scope.$apply()
+  })
 }]

@@ -7,20 +7,17 @@
 /* globals angular */
 
 import SearchCtl from './controllers/search'
+import SearchParams from './factories/search'
 
 export default exceptionHandler => (resolve, reject) => {
   try {
     const app = angular.module('delish', ['ngRoute', 'ngAnimate'])
 
     app.factory('$exceptionHandler', () => exceptionHandler)
+    app.factory('$searchParams', SearchParams)
 
     app.config(['$routeProvider', '$locationProvider', ($router, $location) => {
-      $router
-        .when('/', {
-          templateUrl: '/views/index.html',
-          controller: 'SearchCtl'
-        })
-        .otherwise('/')
+      $router.otherwise('/')
       $location.html5Mode(true)
 
       resolve()

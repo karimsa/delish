@@ -1,3 +1,4 @@
 *.log
 public/vendor
 node_modules
+env.json

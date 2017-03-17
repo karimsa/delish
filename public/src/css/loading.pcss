@@ -9,13 +9,24 @@
   @mixin topleft;
 
   z-index: -1;
-  background: #24282b;
+  background: #414f4b;
   opacity: 0;
 }
 
 .loading .loading-screen,
 .error .loading-screen {
   z-index: 1000;
+}
+
+.loading .navbar,
+.error .navbar {
+  opacity: 0;
+}
+
+.navbar,
+.loading .navbar,
+.error .navbar {
+  transition: .7s opacity ease;
 }
 
 .error .loading-screen {

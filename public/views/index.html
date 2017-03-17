@@ -4,7 +4,7 @@
       <div class="col-6 offset-3 text-center search">
         <h1 class="title">DELISH</h1>
         <p class="lead slogan">Find your love. Then eat it.</p>
-        <input type="text" ng-model="query" class="form-control" placeholder="Search for your love here">
+        <input type="text" ng-model="query" ng-change="doSearch(query)" class="form-control" placeholder="Search for your love here">
       </div>
     </div>
   </div>

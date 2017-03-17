@@ -13,8 +13,11 @@
 
   <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="dist/css/bundle.css">
+
+  <script src="vendor/jquery/dist/jquery.min.js"></script>
+  <script src="dist/js/track.js"></script>
 </head>
-<body>
+<body ng-controller="MapCtl">
   <div class="navbar navbar-toggleable-sm fixed-top">
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#search-form" aria-controls="search-form" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -25,7 +28,7 @@
     <div class="collapse navbar-collapse" id="search-form">
       <form class="form-inline navbar-right col-sm-4 col-12" ng-controller="SearchCtl">
         <input type="text" class="form-control hintish" ng-value="prediction()">
-        <input type="text" class="form-control input" ng-model="query" ng-change="search(query)" placeholder="Find your taste">
+        <input type="text" class="form-control input" ng-model="query" ng-change="search(query)" ng-keyup="complete($event)" placeholder="Find your taste">
       </form>
     </div>
   </div>
@@ -39,11 +42,7 @@
 
   <img src="dist/img/doh.png" class="doh">
 
-  <script>window._trackJs = { token: 'dd00708cab8f4cdd9b22b9c5a656271c' }</script>
-  <script src="https://cdn.trackjs.com/releases/current/tracker.js"></script>
-
   <script src="/socket.io/socket.io.js"></script>
-  <script src="vendor/jquery/dist/jquery.min.js"></script>
   <script src="vendor/angular/angular.min.js"></script>
   <script src="vendor/angular-animate/angular-animate.min.js"></script>
   <script src="vendor/angular-route/angular-route.min.js"></script>

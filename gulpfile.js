@@ -45,7 +45,7 @@ gulp.task('lint:js', ['lint:browser', 'lint:node'])
 
 gulp.task('build:js', () =>
   browserify({
-    entries: BROWSER_JS_FILES.map(a => glob.sync(a)),
+    entries: 'public/src/js/setup.js',
     debug: true
   })
       .transform('babelify')
@@ -58,7 +58,22 @@ gulp.task('build:js', () =>
       .pipe(gulp.dest('./public/dist/js'))
 )
 
-gulp.task('js', ['lint:js', 'build:js'])
+gulp.task('build:trackjs', () =>
+  browserify({
+    entries: 'public/src/js/track.js',
+    debug: true
+  })
+      .transform('babelify')
+      .bundle()
+      .pipe(source('track.js'))
+      .pipe(buffer())
+      .pipe(sourcemaps.init())
+      .pipe(uglify())
+      .pipe(sourcemaps.write('.'))
+      .pipe(gulp.dest('./public/dist/js'))
+)
+
+gulp.task('js', ['lint:js', 'build:js', 'build:trackjs'])
 
 gulp.task('lint:css', () =>
   gulp.src(CSS_FILES)

@@ -4,50 +4,74 @@
  * Licensed under MIT license.
  * Copyright (C) 2017 Karim Alibhai.
  */
-/* globals trackJs */
+/* globals $, trackJs */
 
 const util = require('util')
-    , debounce = require('debounce')
 
-let currentLog = document.querySelector('.lead')
-  , nextLog = document.querySelector('.lead.next')
+let currentLog = $('.lead:eq(0)')
+  , nextLog = $('.lead.next')
   , appHasFailed = false
+  , logInProgress = false
 
 /**
  * Actual logger.
  */
-const _log = debounce(function (done) {
-  let text
+const _log = function () {
+  if (logInProgress) return;
+  logInProgress = true
 
-  if (typeof done === 'function') {
-    text = util.format.apply(util, [].slice.call(arguments, 1))
-  } else {
-    text = util.format.apply(util, arguments)
-    done = () => 0
+  let text = util.format.apply(util, arguments)
+
+  // ensure that dom is ready
+  if (Math.min(currentLog.length, nextLog.length) === 0) {
+    currentLog = $('.lead:eq(0)')
+    nextLog = $('.lead.next')
+
+    if (Math.min(currentLog.length, nextLog.length) === 0) {
+      logInProgress = false
+      return $(() => _log(text))
+    }
   }
 
   // transition to the new log
-  nextLog.innerText = text
-  currentLog.classList.add('hide')
-  nextLog.classList.remove('next')
+  nextLog.text(text)
+  currentLog.addClass('hide')
+  nextLog.removeClass('next')
 
   // after the CSS transition completes, swap
   // the log elements out
   setTimeout(() => {
-    let parent = currentLog.parentElement
-
-    parent.removeChild(currentLog)
+    let parent = currentLog.parent()
+    currentLog.remove()
     currentLog = nextLog
 
-    nextLog = document.createElement('p')
-    nextLog.classList.add('lead')
-    nextLog.classList.add('next')
-    parent.appendChild(nextLog)
+    nextLog = $('<p class="lead next"></p>')
+    parent.append(nextLog)
+
+    logInProgress = false
   }, 700)
 
   // return reference to the log element used
-  done(nextLog)
-}, 700)
+  return nextLog
+}
+
+/**
+ * Logs when current log is done.
+ */
+function logLater(done) {
+  const args = [].slice.call(arguments)
+
+  if (Math.min(currentLog.length, nextLog.length) === 0) {
+    currentLog = $('.lead:eq(0)')
+    nextLog = $('.lead.next')
+
+    setTimeout(() => logLater.apply(this, args), 0)
+  } else if (logInProgress) {
+    setTimeout(() => logLater.apply(this, args), 0)
+  } else {
+    done(_log.apply(this, args.slice(1)))
+  }
+}
 
 /**
  * Updates the current log status.
@@ -62,17 +86,21 @@ export const log = function () {
 }
 
 /**
+ * Displays the error.
+ */
+export function failOnce() {
+  if (appHasFailed) return;
+  appHasFailed = true
+  $('html').addClass('error')
+
+  logLater(logElm =>
+    logElm.addClass('error-msg')
+          .addClass('col-8')
+          .addClass('offset-2')
+  , 'Things have gone horribly wrong. I think your computer is going to explode. But what do I know, I\'m just an error message.')
+}
+
+/**
  * Handle task failure.
  */
-export function fail(err) {
-  appHasFailed = true
-  trackJs.track(err)
-
-  document.documentElement.classList.add('error')
-
-  _log(logElm => {
-    logElm.classList.add('error-msg')
-    logElm.classList.add('col-8')
-    logElm.classList.add('offset-2')
-  }, 'Things have gone horribly wrong. I think your computer is going to explode. But what do I know, I\'m just an error message.')
-}
+export const fail = err => trackJs.track(err)

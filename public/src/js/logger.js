@@ -11,14 +11,12 @@ const util = require('util')
 
 let currentLog = document.querySelector('.lead')
   , nextLog = document.querySelector('.lead.next')
+  , appHasFailed = false
 
 /**
- * Updates the current log status.
- * @param {?Function} done a callback to execute if the log happens
- * @param {String} message the string with formatting
- * @param {...Object} values any values to plug in
+ * Actual logger.
  */
-export const log = debounce(function (done) {
+const _log = debounce(function (done) {
   let text
 
   if (typeof done === 'function') {
@@ -52,14 +50,27 @@ export const log = debounce(function (done) {
 }, 700)
 
 /**
+ * Updates the current log status.
+ * @param {?Function} done a callback to execute if the log happens
+ * @param {String} message the string with formatting
+ * @param {...Object} values any values to plug in
+ */
+export const log = function () {
+  if (!appHasFailed) {
+    return _log.apply(this, arguments)
+  }
+}
+
+/**
  * Handle task failure.
  */
 export function fail(err) {
+  appHasFailed = true
   trackJs.track(err)
 
   document.documentElement.classList.add('error')
 
-  log(logElm => {
+  _log(logElm => {
     logElm.classList.add('error-msg')
     logElm.classList.add('col-8')
     logElm.classList.add('offset-2')

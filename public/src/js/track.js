@@ -1,8 +1,9 @@
 /**
- * public/src/js/track.js - delish
- * 
- * Licensed under MIT license.
- * Copyright (C) 2017 Karim Alibhai.
+ * @file public/src/js/track.js
+ * @description Sets up track.js and connects it to logger.
+ * @author Karim Alibhai
+ * @license MIT
+ * @copyright Karim Alibhai 2017
  */
 
 import { failOnce } from './logger'

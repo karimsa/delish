@@ -1,8 +1,12 @@
 /**
- * public/src/js/app.js - delish
- * 
- * Licensed under MIT license.
- * Copyright (C) 2017 Karim Alibhai.
+ * @file public/src/js/app.js
+ * @author Karim Alibhai
+ * @license MIT
+ * @copyright Karim Alibhai 2017
+ */
+/**
+ * Creates the angular app and bootstraps it.
+ * @module createApp
  */
 /* globals angular */
 

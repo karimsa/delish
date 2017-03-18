@@ -1,10 +1,13 @@
 /**
- * public/src/js/map/options.js - delish
- * 
- * Licensed under MIT license.
- * Copyright (C) 2017 Karim Alibhai.
+ * @file public/src/js/map/options.js
+ * @author Karim Alibhai
+ * @license MIT
+ * @copyright Karim Alibhai 2017
  */
 
+/**
+ * Defaults to use when setting up the Google Map.
+ */
 export default {
   /**
    * Default zoom of 16 allows user to see streets.

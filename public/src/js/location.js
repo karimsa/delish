@@ -1,8 +1,12 @@
 /**
- * public/src/js/location.js - delish
- * 
- * Licensed under MIT license.
- * Copyright (C) 2017 Karim Alibhai.
+ * @file public/src/js/location.js
+ * @author Karim Alibhai
+ * @license MIT
+ * @copyright Karim Alibhai 2017
+ */
+/**
+ * Provides a wrapper over the native Geolocation API.
+ * @module location
  */
 
 import { fail } from './logger'
@@ -23,10 +27,13 @@ navigator.geolocation.watchPosition(pos => {
 /**
  * @returns {LatLng} a copy of the user's current location
  */
-export const getCurrentLocation = () => Object.assign({}, location)
+export function getCurrentLocation() {
+  return Object.assign({}, location)
+}
 
 /**
  * Get the first available location.
+ * @param {Function} done a callback which will be called with a location when it is available
  */
 export function getFirstLocation(done) {
   if (location.lat === undefined) {
@@ -40,4 +47,6 @@ export function getFirstLocation(done) {
  * Attaches an event handler to location updates.
  * @param {Function} callback an event handler for location updates
  */
-export const getLocationAlways = callback => locEmitter.on('update', callback)
+export function getLocationAlways(callback) {
+  locEmitter.on('update', callback)
+}

@@ -1,8 +1,12 @@
 /**
- * public/src/js/controllers/map.js - delish
- * 
- * Licensed under MIT license.
- * Copyright (C) 2017 Karim Alibhai.
+ * @file public/src/js/controllers/map.js
+ * @author Karim Alibhai
+ * @license MIT
+ * @copyright Karim Alibhai 2017
+ */
+/**
+ * Controller to manage the Google Map instance.
+ * @module MapCtl
  */
 
 import sock from '../socket'
@@ -10,6 +14,11 @@ import debounce from 'debounce'
 import { getFirstLocation } from '../location'
 import { getMapWhenReady, getMap } from '../map'
 
+/**
+ * Factory to create the map controller.
+ * @param {Function} ready a callback to call when the map is ready
+ * @returns {Array} array of dependencies ending with the angular controller factory
+ */
 export default ready => [() => {
   /**
    * Executes a nearby search using params.

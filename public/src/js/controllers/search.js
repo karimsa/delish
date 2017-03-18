@@ -1,8 +1,12 @@
 /**
- * public/src/js/controllers/search.js - delish
- * 
- * Licensed under MIT license.
- * Copyright (C) 2017 Karim Alibhai.
+ * @file public/src/js/controllers/search.js
+ * @author Karim Alibhai
+ * @license MIT
+ * @copyright Karim Alibhai 2017
+ */
+/**
+ * Controller to manage the search and autocomplete.
+ * @module SearchCtl
  */
 
 import sock from '../socket'
@@ -10,6 +14,10 @@ import debounce from 'debounce'
 import { getCurrentLocation } from '../location'
 import { getMap } from '../map'
 
+/**
+ * Angular controller factory for SearchCtl.
+ * @returns {Array} an array of angular dependencies ending with the factory function
+ */
 export default ['$scope', ($scope) => {
   $scope.search = debounce(query => {
     if (!query) {

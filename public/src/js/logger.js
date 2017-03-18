@@ -1,8 +1,12 @@
 /**
- * public/src/js/logger.js - delish
- * 
- * Licensed under MIT license.
- * Copyright (C) 2017 Karim Alibhai.
+ * @file public/src/js/location.js
+ * @author Karim Alibhai
+ * @license MIT
+ * @copyright Karim Alibhai 2017
+ */
+/**
+ * Interface for logging during setup and failing.
+ * @module logger
  */
 /* globals $, trackJs */
 
@@ -14,7 +18,10 @@ let currentLog = $('.lead:eq(0)')
   , logInProgress = false
 
 /**
- * Actual logger.
+ * Private logger that logs in an animated fashion.
+ * @param {String} message a formatter string (as passed to util.format)
+ * @param {...Object} values values to format in (as passed to util.format)
+ * @returns {HTMLElement} the element that the log is written into
  */
 const _log = function () {
   if (logInProgress) return;
@@ -56,7 +63,10 @@ const _log = function () {
 }
 
 /**
- * Logs when current log is done.
+ * Logs when current log is done and the DOM is ready.
+ * @param {Function} done callback to execute when log is executed, it will be passed the log element
+ * @param {String} message a formatter string (as passed to util.format)
+ * @param {...Object} values values to format in (as passed to util.format)
  */
 function logLater(done) {
   const args = [].slice.call(arguments)
@@ -74,10 +84,10 @@ function logLater(done) {
 }
 
 /**
- * Updates the current log status.
- * @param {?Function} done a callback to execute if the log happens
+ * Updates the current log status (if app is alive).
  * @param {String} message the string with formatting
  * @param {...Object} values any values to plug in
+ * @returns {HTMLElement} the element that the log is written into
  */
 export const log = function () {
   if (!appHasFailed) {
@@ -86,7 +96,7 @@ export const log = function () {
 }
 
 /**
- * Displays the error.
+ * Displays static error message and causes application failure. Not to be invoked directly.
  */
 export function failOnce() {
   if (appHasFailed) return;
@@ -101,6 +111,7 @@ export function failOnce() {
 }
 
 /**
- * Handle task failure.
+ * An alias for trackJs.track().
+ * @param {Error} err an error object
  */
 export const fail = err => trackJs.track(err)

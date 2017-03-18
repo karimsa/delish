@@ -1,8 +1,12 @@
 /**
- * public/src/js/map.js - delish
- * 
- * Licensed under MIT license.
- * Copyright (C) 2017 Karim Alibhai.
+ * @file public/src/js/map/index.js
+ * @author Karim Alibhai
+ * @license MIT
+ * @copyright Karim Alibhai 2017
+ */
+/**
+ * Provides wrappers for Google Maps and utilities to use them.
+ * @module map
  */
 /* globals google */
 
@@ -98,11 +102,13 @@ class Map {
   }
 
   /**
-   * Centers the map.
+   * Sets the center of the map if arguments are provided,
+   * otherwise returns the current location.
    * 
-   * @param {number} lat the latitude of the center
-   * @param {number} lng the longitude of the center
-   * @returns {Map} current object for chaining
+   * @param {number} [lat] the latitude of the center
+   * @param {number} [lng] the longitude of the center
+   * @returns {Map} current object for chaining, if arguments were provided
+   * @returns {LatLngLiteral} current map center, if arguments were not provided
    */
   center (lat, lng) {
     if (lat === undefined) return simpleLatLng(this.map.getCenter())

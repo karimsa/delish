@@ -1,8 +1,9 @@
 /**
- * public/src/js/setup/index.js - delish
- * 
- * Licensed under MIT license.
- * Copyright (C) 2017 Karim Alibhai.
+ * @file public/src/js/setup.js
+ * @description Sets up the app.
+ * @author Karim Alibhai
+ * @license MIT
+ * @copyright Karim Alibhai 2017
  */
 
 import { log, fail } from './logger'

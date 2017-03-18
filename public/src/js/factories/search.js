@@ -6,13 +6,7 @@
  */
 
 export default () => {
-  const params = {
-    /**
-     * Default radius of 20 meters to search within.
-     */
-    radius: 20
-  }
-
+  const params = {}
   return params
 }
 
@@ -20,10 +14,4 @@ export default () => {
  * Type and option information for each search parameter
  * for view construction.
  */
-export const ParamTypes = {
-  radius: {
-    type: 'range',
-    min: 1,
-    max: 100
-  }
-}
+export const ParamTypes = {}

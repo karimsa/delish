@@ -6,6 +6,7 @@
  */
 /* globals angular */
 
+import MapCtl from './controllers/map'
 import SearchCtl from './controllers/search'
 import SearchParams from './factories/search'
 
@@ -19,10 +20,9 @@ export default exceptionHandler => (resolve, reject) => {
     app.config(['$routeProvider', '$locationProvider', ($router, $location) => {
       $router.otherwise('/')
       $location.html5Mode(true)
-
-      resolve()
     }])
 
+    app.controller('MapCtl', MapCtl(resolve))
     app.controller('SearchCtl', SearchCtl)
 
     angular.element(() => angular.bootstrap(document, ['delish']))

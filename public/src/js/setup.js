@@ -6,8 +6,9 @@
  */
 
 import { log, fail } from './logger'
-import Map from './map'
+import createMap from './map'
 import createApp from './app'
+import { getFirstLocation } from './location'
 
 /**
  * Promise-ify Google map success.
@@ -22,9 +23,15 @@ const mapReady = new Promise(resolve => {
  */
 const tasks = {
   order: [
+    'Locating you',
     'Creating sexy map',
     'Wrapping up'
   ],
+
+  /**
+   * Tracks down your first location. Or fails.
+   */
+  'Locating you': resolve => getFirstLocation(resolve),
 
   /**
    * Creates a new Google map instance
@@ -34,9 +41,7 @@ const tasks = {
       let map = document.createElement('div')
       map.id = 'map'
       document.body.insertBefore(map, document.body.children[0])
-      window.Map = new Map(map)
-
-      resolve()
+      createMap(map, resolve)
     }).catch(reject)
 
     let script = document.createElement('script')
@@ -65,6 +70,7 @@ function next() {
     }, 2000)
   } else {
     let text = tasks.order[i]
+    console.warn(text + ' ...')
     log(text + ' ...')
 
     new Promise(tasks[text])

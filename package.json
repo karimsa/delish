@@ -12,7 +12,8 @@
     "setup": "if [ -z \"$NODE_ENV\" ] || [ \"$NODE_ENV\" == \"production\" ]; then ./node_modules/precommit/bin/cli.js install; fi",
     "watch": "concurrently -k 'node index.js' 'gulp watch'",
     "pretest": "gulp lint:css lint:js",
-    "test": "echo \"There aren't actually any unit tests ... but let's pass.\""
+    "test": "echo \"There aren't actually any unit tests ... but let's pass.\"",
+    "docs": "jsdoc $(find lib public/src/js -name '*.js') -d docs -t node_modules/minami"
   },
   "precommit": [
     "npm run pretest"
@@ -44,6 +45,8 @@
     "gulp-sourcemaps": "^2.4.1",
     "gulp-stylelint": "^3.9.0",
     "gulp-uglify": "^2.1.0",
+    "jsdoc": "^3.4.3",
+    "minami": "^1.1.1",
     "precommit": "^1.2.2",
     "precss": "^1.4.0",
     "stylelint": "^7.9.0",

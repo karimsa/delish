@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>public/src/js/map/index.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="module-map-Map.html">Map</a><ul class='methods'><li data-type='method'><a href="module-map-Map.html#center">center</a></li><li data-type='method'><a href="module-map-Map.html#on">on</a></li><li data-type='method'><a href="module-map-Map.html#plot">plot</a></li><li data-type='method'><a href="module-map-Map.html#radius">radius</a></li><li data-type='method'><a href="module-map-Map.html#zoom">zoom</a></li></ul></li><li><a href="module-map-Spot.html">Spot</a></li></ul><h3>Modules</h3><ul><li><a href="module-createApp.html">createApp</a></li><li><a href="module-location.html">location</a><ul class='methods'><li data-type='method'><a href="module-location.html#.getCurrentLocation">getCurrentLocation</a></li><li data-type='method'><a href="module-location.html#.getFirstLocation">getFirstLocation</a></li><li data-type='method'><a href="module-location.html#.getLocationAlways">getLocationAlways</a></li></ul></li><li><a href="module-logger.html">logger</a><ul class='methods'><li data-type='method'><a href="module-logger.html#.failOnce">failOnce</a></li><li data-type='method'><a href="module-logger.html#~_log">_log</a></li><li data-type='method'><a href="module-logger.html#~logLater">logLater</a></li></ul></li><li><a href="module-map.html">map</a><ul class='methods'><li data-type='method'><a href="module-map.html#~getDistance">getDistance</a></li><li data-type='method'><a href="module-map.html#~simpleLatLng">simpleLatLng</a></li><li data-type='method'><a href="module-map.html#~spotID">spotID</a></li></ul></li><li><a href="module-MapCtl.html">MapCtl</a></li><li><a href="module-search_autocomplete.html">search/autocomplete</a></li><li><a href="module-SearchCtl.html">SearchCtl</a></li><li><a href="module-socket.html">socket</a></li></ul><h3>Global</h3><ul><li><a href="global.html#mapReady">mapReady</a></li><li><a href="global.html#next">next</a></li><li><a href="global.html#ParamTypes">ParamTypes</a></li><li><a href="global.html#places">places</a></li><li><a href="global.html#tasks">tasks</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">public/src/js/map/index.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file public/src/js/map/index.js
+ * @author Karim Alibhai
+ * @license MIT
+ * @copyright Karim Alibhai 2017
+ */
+/**
+ * Provides wrappers for Google Maps and utilities to use them.
+ * @module map
+ */
+/* globals google */
+
+import MapOptions from './options'
+import { getFirstLocation, getLocationAlways } from '../location'
+
+/**
+ * Gets the distance (in meters) between two points on a map. (Source: http://stackoverflow.com/a/11172685)
+ * @param {LatLng} start one of the two points
+ * @param {LatLng} end the other point
+ * @returns {Number} the distance between start and end
+ */
+function getDistance({ lat: lat1, lng: lon1 }, { lat: lat2, lng: lon2 }) {
+  var R = 6378.137
+    , dLat = lat2 * Math.PI / 180 - lat1 * Math.PI / 180
+    , dLon = lon2 * Math.PI / 180 - lon1 * Math.PI / 180
+    , a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+          Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+          Math.sin(dLon / 2) * Math.sin(dLon / 2)
+    , c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+
+  return R * c * 1000
+}
+
+/**
+ * Converts a LatLng object from a map to a literal.
+ * @param {LatLng} latlng a proper LatLng object from the google map API
+ * @returns {LatLngLiteral} the simplified LatLngLiteral object
+ */
+function simpleLatLng(latlng) {
+  return {
+    lat: latlng.lat(),
+    lng: latlng.lng()
+  }
+}
+
+/**
+ * @returns {String} the unique ID of this spot
+ */
+const spotID = spot =>
+  [
+    spot.name,
+    spot.geometry.location.lat,
+    spot.geometry.location.lng
+  ].join(',')
+
+/**
+ * Marker wrapper for manipulating the marker.
+ */
+class Spot {
+  /**
+   * Creates a new Spot instance.
+   * @param {Spot} spot the search result to plot
+   * @param {Map} map the Google Map instance to plot on
+   */
+  constructor (spot, map) {
+    this.marker = new google.maps.Marker({
+      position: spot.geometry.location,
+      map,
+      title: spot.name,
+      animation: google.maps.Animation.DROP
+    })
+  }
+}
+
+/**
+ * Map wrapper. For easier handling.
+ */
+class Map {
+  constructor (elm, ready) {
+    this.map = new google.maps.Map(elm, MapOptions)
+    this.spots = {}
+
+    google.maps.event.addListenerOnce(this.map, 'bounds_changed', ready)
+    getFirstLocation(pos => {
+      this.center(pos.lat, pos.lng)
+      this.you = new google.maps.Marker({
+        position: pos,
+        map: this.map,
+        title: 'This is you. Don\'t click you.',
+        animation: google.maps.Animation.DROP,
+        icon: {
+          url: '/dist/img/you.png',
+          size: new google.maps.Size(54.92537312, 64),
+          scaledSize: new google.maps.Size(54.92537312, 64)
+        }
+      })
+
+      getLocationAlways(pos => {
+        this.you.setPosition(pos)
+      })
+    })
+  }
+
+  /**
+   * Sets the center of the map if arguments are provided,
+   * otherwise returns the current location.
+   * 
+   * @param {number} [lat] the latitude of the center
+   * @param {number} [lng] the longitude of the center
+   * @returns {Map} current object for chaining, if arguments were provided
+   * @returns {LatLngLiteral} current map center, if arguments were not provided
+   */
+  center (lat, lng) {
+    if (lat === undefined) return simpleLatLng(this.map.getCenter())
+
+    this.map.setCenter({ lat, lng })
+    return this
+  }
+
+  /**
+   * @returns {Number} the current zoom level
+   */
+  zoom () {
+    return this.map.getZoom()
+  }
+
+  /**
+   * Gets the viewable radius of this map.
+   * @returns {Number} the viewable radius in meters
+   */
+  radius () {
+    return getDistance(
+      simpleLatLng(this.map.getCenter()),
+      simpleLatLng(this.map.getBounds().getNorthEast())
+    )
+  }
+
+  /**
+   * Creates and plots a new spot on the map.
+   * 
+   * @param {Object} spot a search result for nearby restaurants
+   * @returns {Spot} a new spot instance
+   */
+  plot (spot) {
+    let id = spotID(spot)
+
+    if (!this.spots.hasOwnProperty(id)) {
+      this.spots[id] = new Spot(spot, this.map)
+    }
+
+    return this.spots[id]
+  }
+
+  /**
+   * Attachs a callback to an event.
+   * @param {String} event the name of the event
+   * @param {Function} handler the callback to handle the event
+   * @returns {Map} the current object for chaining
+   */
+  on (event, handler) {
+    this.map.addListener(event, handler)
+    return this
+  }
+}
+
+let map
+
+/**
+ * Creates a new map instance.
+ * @param {HTMLElement} elm an HTML element to use as the map
+ * @returns {Map} a new map instance
+ */
+export default (elm, ready) => (map = new Map(elm, ready))
+
+/**
+ * Gets the current map instance.
+ * @returns {Map} the saved map instance
+ */
+export const getMap = () => map
+
+/**
+ * Gets the map instance, if ready.
+ * @param {Function} done callback to call when map becomes ready
+ */
+export const getMapWhenReady = done => {
+  if (map) done(map)
+  else setTimeout(() => getMapWhenReady(done), 0)
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Mar 17 2017 23:29:56 GMT-0400 (EDT) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

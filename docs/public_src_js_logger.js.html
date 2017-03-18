@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>public/src/js/logger.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="module-map-Map.html">Map</a><ul class='methods'><li data-type='method'><a href="module-map-Map.html#center">center</a></li><li data-type='method'><a href="module-map-Map.html#on">on</a></li><li data-type='method'><a href="module-map-Map.html#plot">plot</a></li><li data-type='method'><a href="module-map-Map.html#radius">radius</a></li><li data-type='method'><a href="module-map-Map.html#zoom">zoom</a></li></ul></li><li><a href="module-map-Spot.html">Spot</a></li></ul><h3>Modules</h3><ul><li><a href="module-createApp.html">createApp</a></li><li><a href="module-location.html">location</a><ul class='methods'><li data-type='method'><a href="module-location.html#.getCurrentLocation">getCurrentLocation</a></li><li data-type='method'><a href="module-location.html#.getFirstLocation">getFirstLocation</a></li><li data-type='method'><a href="module-location.html#.getLocationAlways">getLocationAlways</a></li></ul></li><li><a href="module-logger.html">logger</a><ul class='methods'><li data-type='method'><a href="module-logger.html#.failOnce">failOnce</a></li><li data-type='method'><a href="module-logger.html#~_log">_log</a></li><li data-type='method'><a href="module-logger.html#~logLater">logLater</a></li></ul></li><li><a href="module-map.html">map</a><ul class='methods'><li data-type='method'><a href="module-map.html#~getDistance">getDistance</a></li><li data-type='method'><a href="module-map.html#~simpleLatLng">simpleLatLng</a></li><li data-type='method'><a href="module-map.html#~spotID">spotID</a></li></ul></li><li><a href="module-MapCtl.html">MapCtl</a></li><li><a href="module-search_autocomplete.html">search/autocomplete</a></li><li><a href="module-SearchCtl.html">SearchCtl</a></li><li><a href="module-socket.html">socket</a></li></ul><h3>Global</h3><ul><li><a href="global.html#mapReady">mapReady</a></li><li><a href="global.html#next">next</a></li><li><a href="global.html#ParamTypes">ParamTypes</a></li><li><a href="global.html#places">places</a></li><li><a href="global.html#tasks">tasks</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">public/src/js/logger.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file public/src/js/location.js
+ * @author Karim Alibhai
+ * @license MIT
+ * @copyright Karim Alibhai 2017
+ */
+/**
+ * Interface for logging during setup and failing.
+ * @module logger
+ */
+/* globals $, trackJs */
+
+const util = require('util')
+
+let currentLog = $('.lead:eq(0)')
+  , nextLog = $('.lead.next')
+  , appHasFailed = false
+  , logInProgress = false
+
+/**
+ * Private logger that logs in an animated fashion.
+ * @param {String} message a formatter string (as passed to util.format)
+ * @param {...Object} values values to format in (as passed to util.format)
+ * @returns {HTMLElement} the element that the log is written into
+ */
+const _log = function () {
+  if (logInProgress) return;
+  logInProgress = true
+
+  let text = util.format.apply(util, arguments)
+
+  // ensure that dom is ready
+  if (Math.min(currentLog.length, nextLog.length) === 0) {
+    currentLog = $('.lead:eq(0)')
+    nextLog = $('.lead.next')
+
+    if (Math.min(currentLog.length, nextLog.length) === 0) {
+      logInProgress = false
+      return $(() => _log(text))
+    }
+  }
+
+  // transition to the new log
+  nextLog.text(text)
+  currentLog.addClass('hide')
+  nextLog.removeClass('next')
+
+  // after the CSS transition completes, swap
+  // the log elements out
+  setTimeout(() => {
+    let parent = currentLog.parent()
+    currentLog.remove()
+    currentLog = nextLog
+
+    nextLog = $('&lt;p class="lead next">&lt;/p>')
+    parent.append(nextLog)
+
+    logInProgress = false
+  }, 700)
+
+  // return reference to the log element used
+  return nextLog
+}
+
+/**
+ * Logs when current log is done and the DOM is ready.
+ * @param {Function} done callback to execute when log is executed, it will be passed the log element
+ * @param {String} message a formatter string (as passed to util.format)
+ * @param {...Object} values values to format in (as passed to util.format)
+ */
+function logLater(done) {
+  const args = [].slice.call(arguments)
+
+  if (Math.min(currentLog.length, nextLog.length) === 0) {
+    currentLog = $('.lead:eq(0)')
+    nextLog = $('.lead.next')
+
+    setTimeout(() => logLater.apply(this, args), 0)
+  } else if (logInProgress) {
+    setTimeout(() => logLater.apply(this, args), 0)
+  } else {
+    done(_log.apply(this, args.slice(1)))
+  }
+}
+
+/**
+ * Updates the current log status (if app is alive).
+ * @param {String} message the string with formatting
+ * @param {...Object} values any values to plug in
+ * @returns {HTMLElement} the element that the log is written into
+ */
+export const log = function () {
+  if (!appHasFailed) {
+    return _log.apply(this, arguments)
+  }
+}
+
+/**
+ * Displays static error message and causes application failure. Not to be invoked directly.
+ */
+export function failOnce() {
+  if (appHasFailed) return;
+  appHasFailed = true
+  $('html').addClass('error')
+
+  logLater(logElm =>
+    logElm.addClass('error-msg')
+          .addClass('col-8')
+          .addClass('offset-2')
+  , 'Things have gone horribly wrong. I think your computer is going to explode. But what do I know, I\'m just an error message.')
+}
+
+/**
+ * An alias for trackJs.track().
+ * @param {Error} err an error object
+ */
+export const fail = err => trackJs.track(err)</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Mar 17 2017 23:29:56 GMT-0400 (EDT) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

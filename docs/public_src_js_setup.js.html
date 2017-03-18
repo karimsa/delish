@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>public/src/js/setup.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="module-map-Map.html">Map</a><ul class='methods'><li data-type='method'><a href="module-map-Map.html#center">center</a></li><li data-type='method'><a href="module-map-Map.html#on">on</a></li><li data-type='method'><a href="module-map-Map.html#plot">plot</a></li><li data-type='method'><a href="module-map-Map.html#radius">radius</a></li><li data-type='method'><a href="module-map-Map.html#zoom">zoom</a></li></ul></li><li><a href="module-map-Spot.html">Spot</a></li></ul><h3>Modules</h3><ul><li><a href="module-createApp.html">createApp</a></li><li><a href="module-location.html">location</a><ul class='methods'><li data-type='method'><a href="module-location.html#.getCurrentLocation">getCurrentLocation</a></li><li data-type='method'><a href="module-location.html#.getFirstLocation">getFirstLocation</a></li><li data-type='method'><a href="module-location.html#.getLocationAlways">getLocationAlways</a></li></ul></li><li><a href="module-logger.html">logger</a><ul class='methods'><li data-type='method'><a href="module-logger.html#.failOnce">failOnce</a></li><li data-type='method'><a href="module-logger.html#~_log">_log</a></li><li data-type='method'><a href="module-logger.html#~logLater">logLater</a></li></ul></li><li><a href="module-map.html">map</a><ul class='methods'><li data-type='method'><a href="module-map.html#~getDistance">getDistance</a></li><li data-type='method'><a href="module-map.html#~simpleLatLng">simpleLatLng</a></li><li data-type='method'><a href="module-map.html#~spotID">spotID</a></li></ul></li><li><a href="module-MapCtl.html">MapCtl</a></li><li><a href="module-search_autocomplete.html">search/autocomplete</a></li><li><a href="module-SearchCtl.html">SearchCtl</a></li><li><a href="module-socket.html">socket</a></li></ul><h3>Global</h3><ul><li><a href="global.html#mapReady">mapReady</a></li><li><a href="global.html#next">next</a></li><li><a href="global.html#ParamTypes">ParamTypes</a></li><li><a href="global.html#places">places</a></li><li><a href="global.html#tasks">tasks</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">public/src/js/setup.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file public/src/js/setup.js
+ * @description Sets up the app.
+ * @author Karim Alibhai
+ * @license MIT
+ * @copyright Karim Alibhai 2017
+ */
+
+import { log, fail } from './logger'
+import createMap from './map'
+import createApp from './app'
+import { getFirstLocation } from './location'
+
+/**
+ * Promise-ify Google map success.
+ */
+const mapReady = new Promise(resolve => {
+  window.initMap = resolve
+})
+
+/**
+ * List of tasks, in the order that they
+ * must be executed.
+ */
+const tasks = {
+  order: [
+    'Locating you',
+    'Creating sexy map',
+    'Wrapping up'
+  ],
+
+  /**
+   * Tracks down your first location. Or fails.
+   */
+  'Locating you': resolve => getFirstLocation(resolve),
+
+  /**
+   * Creates a new Google map instance
+   */
+  'Creating sexy map': (resolve, reject) => {
+    mapReady.then(() => {
+      let map = document.createElement('div')
+      map.id = 'map'
+      document.body.insertBefore(map, document.body.children[0])
+      createMap(map, resolve)
+    }).catch(reject)
+
+    let script = document.createElement('script')
+    script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDP65fNhrgLMP9Gu20ATUn2CxwPQErxngQ&amp;callback=initMap'
+    document.body.appendChild(script)
+  },
+
+  /**
+   * Not actually wrapping up. This brings up the app
+   * via angular.
+   */
+  'Wrapping up': createApp(fail)
+}
+
+/**
+ * Executes tasks sequentionally.
+ */
+function next() {
+  i += 1
+
+  if (i === tasks.order.length) {
+    log('Okay I\'m ready now.')
+
+    setTimeout(() => {
+      document.documentElement.classList.remove('loading')
+    }, 2000)
+  } else {
+    let text = tasks.order[i]
+    console.warn(text + ' ...')
+    log(text + ' ...')
+
+    new Promise(tasks[text])
+      .then(next)
+      .catch(fail)
+  }
+}
+
+// start task execution, soon
+let i = -1
+setTimeout(next, 0)</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Mar 17 2017 23:29:56 GMT-0400 (EDT) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

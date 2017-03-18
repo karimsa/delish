@@ -7,9 +7,10 @@
 
 import sock from '../socket'
 import debounce from 'debounce'
-import getCurrentLocation from '../location'
+import { getCurrentLocation } from '../location'
+import { getMap } from '../map'
 
-export default ['$scope', '$searchParams', ($scope, $searchParams) => {
+export default ['$scope', ($scope) => {
   $scope.search = debounce(query => {
     if (!query) {
       $scope.hint = ''
@@ -22,12 +23,18 @@ export default ['$scope', '$searchParams', ($scope, $searchParams) => {
       query,
       lat,
       lng,
-      radius: $searchParams.radius
+      radius: getMap().radius()
     })
   }, 500)
 
   $scope.prediction = () => {
     return $scope.hint && $scope.query ? $scope.query + $scope.hint.substr($scope.query.length) : ''
+  }
+
+  $scope.complete = evt => {
+    if (evt.which === 39) {
+      $scope.query = $scope.prediction()
+    }
   }
 
   sock.on('autocomplete:results', result => {

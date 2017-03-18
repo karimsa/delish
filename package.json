@@ -10,7 +10,7 @@
     "start": "node --optimize_for_size --max_old_space_size=460 --gc_interval=100 index.js",
     "postinstall": "./node_modules/.bin/bower install && npm run setup",
     "setup": "if [ -z \"$NODE_ENV\" ] || [ \"$NODE_ENV\" == \"production\" ]; then ./node_modules/precommit/bin/cli.js install; fi",
-    "watch": "concurrently 'node index.js' 'gulp watch'",
+    "watch": "concurrently -k 'node index.js' 'gulp watch'",
     "pretest": "gulp lint:css lint:js",
     "test": "echo \"There aren't actually any unit tests ... but let's pass.\""
   },

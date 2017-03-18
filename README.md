@@ -10,6 +10,10 @@
   <a href="https://travis-ci.org/karimsa/delish">
     <img src="https://travis-ci.org/karimsa/delish.svg?branch=master" />
   </a>
+
+  <a href="https://codecov.io/gh/karimsa/delish">
+    <img src="https://codecov.io/gh/karimsa/delish/branch/master/graph/badge.svg" alt="Codecov" />
+  </a>
 </p>
 
 Find your love. Then eat it.

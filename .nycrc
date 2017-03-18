@@ -1,0 +1,17 @@
+{
+  "reporter": [
+    "lcov"
+  ],
+  "require": [
+    "babel-register"
+  ],
+  "all": true,
+  "exclude": [
+    "*.js",
+    "docs",
+    "coverage",
+    "test",
+    "node_modules",
+    "public"
+  ]
+}

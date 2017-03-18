@@ -5,8 +5,9 @@
  * Copyright (C) 2017 Karim Alibhai.
  */
 
-const BROWSER_JS_FILES = [ 'public/src/js/*.js', 'public/src/js/**/*.js' ]
+const BROWSER_JS_FILES = [ 'public/src/js/**/*.js' ]
 const NODE_JS_FILES = [ '*.js', '!gulpfile.js' ]
+const TEST_FILES = [ 'test/**/*.js' ]
 const JS_FILES = [].concat(BROWSER_JS_FILES, NODE_JS_FILES)
 const CSS_FILES = [ 'public/src/css/mixins.pcss', 'public/src/css/*.pcss' ]
 
@@ -41,7 +42,20 @@ gulp.task('lint:node', () =>
       .pipe(eslint.failAfterError())
 )
 
-gulp.task('lint:js', ['lint:browser', 'lint:node'])
+gulp.task('lint:test', () =>
+  gulp.src(TEST_FILES)
+      .pipe(eslint({
+        envs: [
+          'node',
+          'mocha',
+          'protractor'
+        ]
+      }))
+      .pipe(eslint.formatEach())
+      .pipe(eslint.failAfterError())
+)
+
+gulp.task('lint:js', ['lint:browser', 'lint:node', 'lint:test'])
 
 gulp.task('build:js', () =>
   browserify({

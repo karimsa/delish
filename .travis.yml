@@ -1,5 +1,14 @@
 language: node_js
 node_js: 7
+addons:
+  apt:
+    packages:
+      - oracle-java8-set-default
+script:
+  - wget -O browser-stack.zip https://www.browserstack.com/browserstack-local/BrowserStackLocal-linux-x64.zip
+  - unzip browser-stack.zip; rm browser-stack.zip
+  - ./BrowserStackLocal --key ${BROWSERSTACK_ACCESS_KEY} &
+  - npm test && node_modules/.bin/codecov
 deploy:
   provider: heroku
   api_key:

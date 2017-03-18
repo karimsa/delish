@@ -1,0 +1,13 @@
+[{
+  "featureType": "all",
+  "elementType": "labels.icon",
+  "stylers": [{
+    "visibility": "off"
+  }]
+}, {
+  "featureType": "water",
+  "elementType": "labels.icon",
+  "stylers": [{
+    "visibility": "off"
+  }]
+}]

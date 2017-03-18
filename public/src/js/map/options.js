@@ -9,17 +9,25 @@ export default {
   /**
    * Default zoom of 16 allows user to see streets.
    */
-  zoom: 17,
+  zoom: 18,
 
   /**
-   * Just a dummy center. This will be updated to a geolocation.
+   * Further than 14 shows more than just the current
+   * city typically, so it's useless to the application.
    */
-  center: { lat: 45.4286821, lng: -75.6898986 },
+  minZoom: 14,
 
   /**
    * See styles file for info on styles.
    */
-  styles: require('./styles'),
+  styles: require('./styles/hybrid'),
+
+  /**
+   * The combination of these two properties allows
+   * a much more interesting view.
+   */
+  mapTypeId: 'hybrid',
+  tilt: 45,
 
   /**
    * Gets rid of the UI provided by Google Maps, with
@@ -28,10 +36,9 @@ export default {
   disableDefaultUI: true,
 
   /**
-   * We disable default keyboard shortcuts so all keyboard
-   * shortcuts can be handled by the application.
+   * We want custom windows for markers.
    */
-  keyboardShortcuts: false,
+  clickableIcons: false,
 
   /**
    * The zoom control is a nice part of the UI, it helps

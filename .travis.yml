@@ -1,17 +1,18 @@
 language: node_js
 node_js: 7
 addons:
+  browserstack:
+    username: karimalibhai2
+    access_key:
+      secure: A3iFcem70txiIjeSFU12bHqXW5YE5d8hw4RD6U4UhHeI51BH/e284NXrP6/tAJEOVwRYn6vU34TK9OicnjXopHk29mYucR4BBuJAQRn3ie3a9O8l/QShkZ+77lK+nI5fMk4NsNydKBWJw7cyicoKprlDyY8j80Nwuon2X3BGk2+Ge2AYwy7q1qjiPCR/RFqBR7J+Lm/BgOamooCyRTUi1tAp8xUlQY9tUQ3x9mcdudYmTlEcJY0lQNRM/iGkYA+NxB2ZjqbE14E92Jk9k/pBoNk1nRDmTzdo3BqKRfrE5Mm0vbk340JjsS/gd83r7EodrgnsSI7i3zqtB107pSGtK763M2BDqVC2gTH4TIBZANn7FOK0YeXh4H26taeRxg4bHAuVM9WrjMiU978TdYKG/lOVTukvoSqzLtH6lUe8RfHK52pN8I8ORegAeG2U9gyx2aXcMTTFBbJtkyyaLhoerho1NgaUktFSdySF3ggPr2BpQr0ZWcFPaTucH9j1Unzryfvf6xe4SOEpxIqcQ/0DmKZM4sg67u1E/0MYogKa69RjkP16ozndoUJpXv+xyUyeq9FzL7rPcPeq0sjQK2/zuNSG6yIuCEwtQfhLHcsCdBkGaThg7anQfXD5S6kc5GTB1En3hZAXKcnypK4/8tdw0L9g8nwpRkFfizslSDB+f3o=
   apt:
     packages:
-      - oracle-java8-set-default
+    - oracle-java8-set-default
 script:
-  - set -e
-  - wget -O browser-stack.zip https://www.browserstack.com/browserstack-local/BrowserStackLocal-linux-x64.zip
-  - unzip browser-stack.zip; rm browser-stack.zip
-  - ./BrowserStackLocal --key ${BROWSERSTACK_ACCESS_KEY} &
-  - npm test
-  - node_modules/.bin/codecov
-  - gulp
+- set -e
+- npm test
+- node_modules/.bin/codecov
+- gulp
 deploy:
   provider: heroku
   api_key:

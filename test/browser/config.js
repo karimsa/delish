@@ -1,3 +1,6 @@
+const browsers = require('browserslist')
+const MOBILE_BROWSERS = ['ios_saf', 'ie_mob']
+
 exports.config = {
   framework: 'mocha',
   seleniumAddress: 'http://hub-cloud.browserstack.com/wd/hub',
@@ -7,11 +10,12 @@ exports.config = {
     'browserstack.key': process.env.BROWSERSTACK_ACCESS_KEY,
     build: 'protractor-browserstack',
     'browserstack.debug': true,
-    'browserstack.local': true
+    'browserstack.local': true,
+    'browserstack.localIdentifier': process.env.BROWSERSTACK_LOCAL_IDENTIFIER
   },
-  multiCapabilities: [
-    { browserName: 'chrome' }
-  ]
+  multiCapabilities: browsers.major.filter(name => {
+    return MOBILE_BROWSERS.indexOf(name) === -1
+  }).map(browserName => ({ browserName }))
 }
 
 exports.config.multiCapabilities.forEach(caps => {

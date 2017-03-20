@@ -1,5 +1,9 @@
-const browsers = require('browserslist')
-const MOBILE_BROWSERS = ['ios_saf', 'ie_mob']
+const SUPPORTED_BROWSERS = [
+  // based on free plan with BrowserStack
+  'chrome',
+  'firefox',
+  'ie'
+]
 
 exports.config = {
   framework: 'mocha',
@@ -13,9 +17,7 @@ exports.config = {
     'browserstack.local': true,
     'browserstack.localIdentifier': process.env.BROWSERSTACK_LOCAL_IDENTIFIER
   },
-  multiCapabilities: browsers.major.filter(name => {
-    return MOBILE_BROWSERS.indexOf(name) === -1
-  }).map(browserName => ({ browserName }))
+  multiCapabilities: SUPPORTED_BROWSERS.map(browserName => ({ browserName }))
 }
 
 exports.config.multiCapabilities.forEach(caps => {

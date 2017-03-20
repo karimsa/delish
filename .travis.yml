@@ -5,10 +5,13 @@ addons:
     packages:
       - oracle-java8-set-default
 script:
+  - set -e
   - wget -O browser-stack.zip https://www.browserstack.com/browserstack-local/BrowserStackLocal-linux-x64.zip
   - unzip browser-stack.zip; rm browser-stack.zip
   - ./BrowserStackLocal --key ${BROWSERSTACK_ACCESS_KEY} &
-  - npm test && node_modules/.bin/codecov
+  - npm test
+  - node_modules/.bin/codecov
+  - gulp
 deploy:
   provider: heroku
   api_key:
@@ -16,3 +19,4 @@ deploy:
   app: stormy-wave-24728
   on:
     repo: karimsa/delish
+  skip_cleanup: true

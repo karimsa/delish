@@ -20,6 +20,8 @@ Find your love. Then eat it.
 
 ## Running the app
 
+*For a complete API reference, click [here](http://alibhai.co/delish).*
+
 ### Development
 
 To run in development mode, run `npm run watch` which will start the backend

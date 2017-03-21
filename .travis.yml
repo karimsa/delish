@@ -10,7 +10,6 @@ addons:
     - oracle-java8-set-default
 script:
 - set -e
-- export WEB_CONCURRENCY=$(node -e 'console.log(require("os").cpus().length)')
 - npm test
 - node_modules/.bin/codecov
 - gulp

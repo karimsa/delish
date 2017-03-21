@@ -42,6 +42,19 @@ describe('lib/nearby/providers/google.js', () => {
         expect(object.key).toEqual(process.env.API_KEY)
 
         return {
+          place (options, callback) {
+            expect(options).toBeA('object')
+            expect(callback).toBeA('function')
+
+            callback(null, {
+              status: 200,
+              json: {
+                status: 'OK',
+                result: {}
+              }
+            })
+          },
+
           placesNearby (options, callback) {
             expect(options).toBeA('object')
             expect(callback).toBeA('function')
@@ -144,7 +157,9 @@ describe('lib/nearby/providers/google.js', () => {
     const results = [... new Array((Math.random() * 50)|0)].map(() =>
       db().make({
         name: 'string',
-        description: 'string'
+        description: 'string',
+        place_id: '',
+        photos: []
       })
     )
 

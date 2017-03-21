@@ -1,15 +1,31 @@
-import expect from 'expect'
+/*import expect from 'expect'
 
-describe('test autocomplete', () => {
-  beforeEach(() => {
+describe('test autocomplete', function () {
+  this.timeout(30000)
+
+  const ti = (name, test) => it(name, async () => {
+    try {
+      await test()
+    } catch (err) {
+      console.log(await browser.getPageSource())
+
+      const elm = element(by.className('error-msg'))
+
+      if (elm.isPresent()) {
+        throw new Error(elm.getText())
+      }
+
+      throw err
+    }
+  })
+
+  beforeEach(async function () {
     browser.ignoreSynchronization = true
     browser.get('http://localhost:8080/')
+    await browser.getTitle()
   })
 
-  it('should have a title', done => {
-    browser.getTitle().then(title => {
-      expect(title).toEqual('DELISH')
-      done()
-    })
+  ti('should have a title', async function () {
+    expect(await browser.getTitle()).toEqual('DELISH')
   })
-})
+})*/

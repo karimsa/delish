@@ -124,7 +124,7 @@ gulp.task('img', () =>
 
 gulp.task('default', ['css', 'js', 'img'])
 
-gulp.task('watch', () => {
+gulp.task('watch', ['default'], () => {
     gulp.watch(JS_FILES.concat([ 'public/src/js/**/*.json' ]), ['js'])
     gulp.watch(CSS_FILES, ['css'])
 })

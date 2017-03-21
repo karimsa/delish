@@ -15,14 +15,33 @@ import { EventEmitter } from 'events'
 const locEmitter = new EventEmitter()
 const location = {}
 
-navigator.geolocation.watchPosition(pos => {
+/**
+ * Updates location when updates are received.
+ * @param {Object} pos position object from geolocation API
+ */
+const success = pos => {
   location.lat = pos.coords.latitude
   location.lng = pos.coords.longitude
 
   locEmitter.emit('update', getCurrentLocation())
-}, fail, {
-  enableHighAccuracy: true
-})
+}
+
+/**
+ * Geolocation options.
+ */
+const options = {
+  enableHighAccuracy: false // true
+}
+
+/**
+ * Create watcher.
+ */
+navigator.geolocation.watchPosition(success, fail, options)
+
+/**
+ * Request first location.
+ */
+//navigator.geolocation.getCurrentPosition(success, fail, options)
 
 /**
  * @returns {LatLng} a copy of the user's current location

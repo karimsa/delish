@@ -1,0 +1,66 @@
+/**
+ * src/css/sidebar.pcss
+ *
+ * Licensed under MIT license.
+ * Copyright (C) 2017 Karim Alibhai.
+ */
+
+.sidebar {
+  z-index: 10000;
+  overflow-y: scroll;
+}
+
+.sidebar,
+.sidebar > .container {
+  display: block;
+  height: 100%;
+}
+
+.sidebar .title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.sidebar .photo-view > img {
+  border: solid .6rem rgba(255, 255, 255, .2);
+}
+
+.sidebar .review {
+  padding: .5rem;
+  margin: 1rem 0;
+  cursor: pointer;
+  background: #fff;
+}
+
+.sidebar .review .header {
+  font-weight: 700;
+}
+
+.sidebar .review .full-text {
+  display: none;
+  opacity: 0;
+}
+
+.sidebar .review.full .full-text {
+  display: block;
+  opacity: 1;
+}
+
+.sidebar .review .short-text {
+  display: block;
+  opacity: 1;
+}
+
+.sidebar .review.full .short-text {
+  display: none;
+  opacity: 0;
+}
+
+.sidebar .review .full-text,
+.sidebar .review .short-text,
+.sidebar .review.full .full-text,
+.sidebar .review.full .short-text {
+  transition: .3s opacity ease;
+}

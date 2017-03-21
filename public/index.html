@@ -11,6 +11,7 @@
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
 
+  <link rel="stylesheet" href="vendor/tether/dist/css/tether.min.css">
   <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="dist/css/bundle.css">
 
@@ -28,8 +29,27 @@
     <div class="collapse navbar-collapse" id="search-form">
       <form class="form-inline navbar-right col-sm-4 col-12" ng-controller="SearchCtl">
         <input type="text" class="form-control hintish" ng-value="prediction()">
-        <input type="text" class="form-control input" ng-model="query" ng-change="search(query)" ng-keyup="complete($event)" placeholder="Find your taste">
+        <input type="text" class="form-control input" ng-model="query" ng-change="search(query)" ng-keyup="complete($event)" placeholder="Filter for your tastes">
       </form>
+    </div>
+  </div>
+
+  <div class="sidebar col-md-3 col-10" ng-controller="DetailsCtl">
+    <div class="container" ng-if="details.name">
+      <div class="row">
+        <div class="col-12 photo-view">
+          <img ng-src="{{details.photos[0]}}" alt="(There was a sexy photo here)" class="img-fluid rounded-circle">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 text-center">
+          <p class="title" ng-bind="details.name"></p>
+        </div>
+      </div>
+      <div class="row review rounded" ng-repeat="review in details.details.reviews track by $index" id="review-{{$index}}" ng-click="setActiveReview($index)">
+        <p class="header">{{ review.author_name }} ({{ review.rating }}/5.0)</p>
+        <div class="short-text" ng-bind="short(review.text)"></div>
+      </div>
     </div>
   </div>
 
@@ -42,7 +62,28 @@
 
   <img src="dist/img/doh.png" class="doh">
 
+  <div class="modal fade" id="review-modal" ng-controller="ReviewCtl">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Review by {{ review.author_name }} ({{ review.rating }}/5.0)</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p ng-bind="review.text"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="/socket.io/socket.io.js"></script>
+  <script src="vendor/tether/dist/js/tether.min.js"></script>
+  <script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="vendor/angular/angular.min.js"></script>
   <script src="vendor/angular-animate/angular-animate.min.js"></script>
   <script src="vendor/angular-route/angular-route.min.js"></script>

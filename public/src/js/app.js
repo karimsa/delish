@@ -12,7 +12,12 @@
 
 import MapCtl from './controllers/map'
 import SearchCtl from './controllers/search'
+import DetailsCtl from './controllers/details'
+import ReviewCtl from './controllers/review'
+
 import SearchParams from './factories/search'
+import DetailsFactory from './factories/details'
+import ReviewFactory from './factories/review'
 
 export default exceptionHandler => (resolve, reject) => {
   try {
@@ -20,6 +25,8 @@ export default exceptionHandler => (resolve, reject) => {
 
     app.factory('$exceptionHandler', () => exceptionHandler)
     app.factory('$searchParams', SearchParams)
+    app.factory('$details', DetailsFactory)
+    app.factory('$review', ReviewFactory)
 
     app.config(['$routeProvider', '$locationProvider', ($router, $location) => {
       $router.otherwise('/')
@@ -28,6 +35,8 @@ export default exceptionHandler => (resolve, reject) => {
 
     app.controller('MapCtl', MapCtl(resolve))
     app.controller('SearchCtl', SearchCtl)
+    app.controller('DetailsCtl', DetailsCtl)
+    app.controller('ReviewCtl', ReviewCtl)
 
     angular.element(() => angular.bootstrap(document, ['delish']))
   } catch (err) {

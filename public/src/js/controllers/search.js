@@ -49,4 +49,9 @@ export default ['$scope', ($scope) => {
     $scope.hint = result
     $scope.$apply()
   })
+
+  $scope.$watch('query', query => {
+    let map = getMap()
+    if (map) map.filter(query || '')
+  })
 }]

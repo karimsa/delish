@@ -8,7 +8,7 @@
  * Interface for logging during setup and failing.
  * @module logger
  */
-/* globals $, trackJs */
+/* globals trackJs */
 
 const util = require('util')
 

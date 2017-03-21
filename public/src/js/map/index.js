@@ -13,6 +13,8 @@
 import MapOptions from './options'
 import { getFirstLocation, getLocationAlways } from '../location'
 import createMarker from '../marker'
+import requestAnimationFrame from '../raf'
+import { EventEmitter } from 'events'
 
 /**
  * Gets the distance (in meters) between two points on a map. (Source: http://stackoverflow.com/a/11172685)
@@ -64,34 +66,70 @@ class Spot {
    * @param {Map} map the Google Map instance to plot on
    */
   constructor (spot, map) {
+    this.id = spotID(spot)
+    this.map = map
+    this.relevancy = spot.rating / 5
+    this.spot = spot
     this.marker = new google.maps.Marker({
       position: spot.geometry.location,
-      map,
+      map: map.map,
       title: spot.name,
       animation: google.maps.Animation.DROP,
       optimized: false,
-      icon: new google.maps.MarkerImage(
-        'data:image/svg+xml;utf-8,' + this.render(1),
-        null, /* size is determined at runtime */
-        null, /* origin is 0,0 */
-        null, /* anchor is bottom center of the scaled image */
-        new google.maps.Size(40, 40)
-      )
+      icon: this.icon()
     })
+
+    this.marker.addListener('click', () =>
+      this.map.setActive(this)
+    )
   }
 
-  render ( relevancy ) {
-    return createMarker(relevancy)
+  hide () {
+    this.marker.setMap(null)
+    return this
+  }
+
+  show () {
+    this.marker.setMap(this.map.map)
+    return this
+  }
+
+  icon () {
+    return new google.maps.MarkerImage(
+      'data:image/svg+xml;utf-8,' + this.render(),
+      null, /* size is determined at runtime */
+      null, /* origin is 0,0 */
+      null, /* anchor is bottom center of the scaled image */
+      new google.maps.Size(40, 40)
+    )
+  }
+
+  render () {
+    return createMarker(this.relevancy)
+  }
+
+  pos () {
+    return this.marker.getPosition()
+  }
+
+  matches (text) {
+    return this.spot.name.toLowerCase().replace(/\s+/g, '').startsWith(text.toLowerCase().replace(/\s+/g, ''))
   }
 }
 
 /**
  * Map wrapper. For easier handling.
  */
-class Map {
+class Map extends EventEmitter {
   constructor (elm, ready) {
+    super()
+
     this.map = new google.maps.Map(elm, MapOptions)
     this.spots = {}
+
+    this.overlay = new google.maps.OverlayView()
+    this.overlay.draw = this.draw.bind(this)
+    this.overlay.setMap(this.map)
 
     google.maps.event.addListenerOnce(this.map, 'bounds_changed', ready)
     getFirstLocation(pos => {
@@ -112,6 +150,94 @@ class Map {
         this.you.setPosition(pos)
       })
     })
+
+    this.canvas = document.createElement('canvas')
+    this.canvas.width = this.canvas.height = 0
+    this.context = this.canvas.getContext('2d')
+    this.framesLeft = this.maxFrames = 40
+    this.prevTarget = { x: 0, y: 0 }
+
+    document.body.appendChild(this.canvas)
+  }
+
+  /**
+   * Sets the given spot as the current active spot.
+   * @param {Spot} spot a valid (cached) spot object
+   * @returns {Map} current map object for chaining
+   */
+  setActive (spot) {
+    this.activeSpot = spot
+    this.emit('active_changed', spot)
+    return this
+  }
+
+  /**
+   * @returns {Spot} the current active spot
+   */
+  getActive () {
+    return this.activeSpot
+  }
+
+  /**
+   * Renders the overlay. Called by OverlayView.
+   */
+  draw () {
+    const projection = this.overlay.getProjection()
+    
+    if (this.activeSpot) {
+      let { x, y } = projection.fromLatLngToContainerPixel(this.activeSpot.pos())
+      let { width } = this.activeSpot.marker.getIcon().scaledSize
+
+      // y value given by the projection must be centered
+      // on the marker, x is already given centered
+      y -= width / 2
+
+      // get the distance that must be moved on the x-axis and
+      // append it to the old position
+      x = this.prevTarget.x + ((x - this.prevTarget.x) / this.framesLeft)
+
+      // same as above for the y
+      y = this.prevTarget.y + ((y - this.prevTarget.y) / this.framesLeft)
+
+      // clear up the canvas
+      this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
+
+      // the canvas being a bit bigger than the
+      // line's end is useful when the line becomes small
+      // (i.e. when the spot starts to move towards the edge)
+      this.canvas.width = x + 10
+      this.canvas.height = y + 10
+
+      // figure out where to start the line
+      const photoView = $('.photo-view>img')
+          , originX = photoView.offset().left + (photoView.width() / 2)
+          , originY = photoView.offset().top + (photoView.height() / 2)
+
+      // paint the line again, with new coordinates
+      this.context.beginPath()
+      this.context.moveTo(originX, originY)
+      this.context.lineTo(x, y)
+      this.context.lineWidth = 2
+      this.context.strokeStyle =
+        `rgba(
+          ${Math.round(255 * (1 - this.activeSpot.relevancy))},
+          ${Math.round(255 * this.activeSpot.relevancy)},
+          0,
+          .5
+        )`
+      this.context.stroke()
+
+      // for trajectory calculation later
+      this.prevTarget = { x, y }
+
+      // trim off number of frames left
+      this.framesLeft -= 1
+
+      // if end of animation, restart
+      if (this.framesLeft === 0) this.framesLeft = this.maxFrames
+    }
+
+    requestAnimationFrame(() => this.draw())
   }
 
   /**
@@ -126,7 +252,7 @@ class Map {
   center (lat, lng) {
     if (lat === undefined) return simpleLatLng(this.map.getCenter())
 
-    this.map.setCenter({ lat, lng })
+    this.map.panTo({ lat, lng })
     return this
   }
 
@@ -158,10 +284,27 @@ class Map {
     let id = spotID(spot)
 
     if (!this.spots.hasOwnProperty(id)) {
-      this.spots[id] = new Spot(spot, this.map)
+      this.spots[id] = new Spot(spot, this)
     }
 
     return this.spots[id]
+  }
+
+  /**
+   * Toggles the visibility of all markers based
+   * on given query.
+   * @param {String} query simple query to search with
+   * @returns {Map} current object for searching
+   */
+  filter (query) {
+    Object.keys(this.spots).forEach(key => {
+      let spot = this.spots[key]
+
+      if (spot.matches(query)) spot.show()
+      else spot.hide()
+    })
+
+    return this
   }
 
   /**
@@ -170,7 +313,7 @@ class Map {
    * @param {Function} handler the callback to handle the event
    * @returns {Map} the current object for chaining
    */
-  on (event, handler) {
+  onMap (event, handler) {
     this.map.addListener(event, handler)
     return this
   }

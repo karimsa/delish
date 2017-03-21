@@ -48,8 +48,8 @@ export default ready => [() => {
    * the map's position.
    */
   getMap()
-    .on('zoom_changed', getNearby)
-    .on('dragend', getNearby)
+    .onMap('zoom_changed', getNearby)
+    .onMap('dragend', getNearby)
 
   // init the map
   getFirstLocation(() =>

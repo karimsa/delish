@@ -27,7 +27,7 @@ const gulp = require('gulp')
 gulp.task('lint:browser', () =>
   gulp.src(BROWSER_JS_FILES)
       .pipe(eslint({
-        envs: ['node', 'browser']
+        envs: ['node', 'browser', 'jquery']
       }))
       .pipe(eslint.formatEach())
       .pipe(eslint.failAfterError())

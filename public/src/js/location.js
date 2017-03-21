@@ -30,7 +30,7 @@ const success = pos => {
  * Geolocation options.
  */
 const options = {
-  enableHighAccuracy: false // true
+  enableHighAccuracy: false
 }
 
 /**
@@ -41,7 +41,7 @@ navigator.geolocation.watchPosition(success, fail, options)
 /**
  * Request first location.
  */
-//navigator.geolocation.getCurrentPosition(success, fail, options)
+navigator.geolocation.getCurrentPosition(success, fail, options)
 
 /**
  * @returns {LatLng} a copy of the user's current location

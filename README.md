@@ -3,7 +3,7 @@
 </p>
 
 <h1 align="center">
-  <a href="https://github.com/karimsa/delish">DELISH</a>
+  <a href="https://stormy-wave-24728.herokuapp.com">DELISH</a>
 </h1>
 
 <p align="center">
@@ -32,6 +32,8 @@ root of the project. Here's a sample `env.json` file:
 }
 ```
 
+In deployment servers, you can set this as an env variable directly.
+
 ### Development
 
 For the development server to be able to resolve geolocation properly (in Safari),
@@ -48,6 +50,8 @@ node or refresh your browser for the public code.
 Continuous Integration + Deployment is configured on Travis CI for Heroku deployment.
 To setup your own CI, ensure that the following environment variables are defined:
 
+ - **NODE_ENV = test**: the NODE_ENV variable (unofficially) defines for applications what environment
+ we are running in and the tests use this variable to do things.
  - **BROWSERSTACK_USERNAME**: your username on BrowserStack.
  - **BROWSERSTACK_ACCESS_KEY**: the access key given to you by BrowserStack.
 

@@ -27,7 +27,7 @@ const gulp = require('gulp')
 gulp.task('lint:browser', () =>
   gulp.src(BROWSER_JS_FILES)
       .pipe(eslint({
-        envs: ['browser']
+        envs: ['node', 'browser']
       }))
       .pipe(eslint.formatEach())
       .pipe(eslint.failAfterError())
@@ -63,6 +63,7 @@ gulp.task('build:js', () =>
     debug: true
   })
       .transform('babelify')
+      .transform('brfs')
       .bundle()
       .pipe(source('bundle.js'))
       .pipe(buffer())

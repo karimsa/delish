@@ -12,6 +12,7 @@
 
 import MapOptions from './options'
 import { getFirstLocation, getLocationAlways } from '../location'
+import createMarker from '../marker'
 
 /**
  * Gets the distance (in meters) between two points on a map. (Source: http://stackoverflow.com/a/11172685)
@@ -67,8 +68,20 @@ class Spot {
       position: spot.geometry.location,
       map,
       title: spot.name,
-      animation: google.maps.Animation.DROP
+      animation: google.maps.Animation.DROP,
+      optimized: false,
+      icon: new google.maps.MarkerImage(
+        'data:image/svg+xml;utf-8,' + this.render(1),
+        null, /* size is determined at runtime */
+        null, /* origin is 0,0 */
+        null, /* anchor is bottom center of the scaled image */
+        new google.maps.Size(40, 40)
+      )
     })
+  }
+
+  render ( relevancy ) {
+    return createMarker(relevancy)
   }
 }
 

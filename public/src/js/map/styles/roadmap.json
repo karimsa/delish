@@ -20,9 +20,6 @@
       },
       {
         "color": "#ffffff"
-      },
-      {
-        "lightness": 40
       }
     ]
   },
@@ -87,21 +84,21 @@
     "featureType": "landscape",
     "elementType": "geometry.fill",
     "stylers": [{
-      "color": "#4d6059"
+      "color": "#2d344f"
     }]
   },
   {
     "featureType": "landscape",
     "elementType": "geometry.stroke",
     "stylers": [{
-      "color": "#4d6059"
+      "color": "#2d344f"
     }]
   },
   {
     "featureType": "landscape.natural",
     "elementType": "geometry.fill",
     "stylers": [{
-      "color": "#4d6059"
+      "color": "#2d344f"
     }]
   },
   {
@@ -115,14 +112,14 @@
     "featureType": "poi",
     "elementType": "geometry.fill",
     "stylers": [{
-      "color": "#4d6059"
+      "color": "#2d344f"
     }]
   },
   {
     "featureType": "poi",
     "elementType": "geometry.stroke",
     "stylers": [{
-      "color": "#4d6059"
+      "color": "#2d344f"
     }]
   },
   {
@@ -132,7 +129,7 @@
         "visibility": "on"
       },
       {
-        "color": "#7f8d89"
+        "color": "#4e5780"
       }
     ]
   },
@@ -140,14 +137,14 @@
     "featureType": "road",
     "elementType": "geometry.fill",
     "stylers": [{
-      "color": "#7f8d89"
+      "color": "#4e5780"
     }]
   },
   {
     "featureType": "road.highway",
     "elementType": "geometry.fill",
     "stylers": [{
-        "color": "#7f8d89"
+        "color": "#4e5780"
       },
       {
         "lightness": 17
@@ -158,7 +155,7 @@
     "featureType": "road.highway",
     "elementType": "geometry.stroke",
     "stylers": [{
-        "color": "#7f8d89"
+        "color": "#4e5780"
       },
       {
         "lightness": 29
@@ -183,14 +180,14 @@
     "featureType": "road.arterial",
     "elementType": "geometry.fill",
     "stylers": [{
-      "color": "#7f8d89"
+      "color": "#4e5780"
     }]
   },
   {
     "featureType": "road.arterial",
     "elementType": "geometry.stroke",
     "stylers": [{
-      "color": "#7f8d89"
+      "color": "#4e5780"
     }]
   },
   {
@@ -208,14 +205,14 @@
     "featureType": "road.local",
     "elementType": "geometry.fill",
     "stylers": [{
-      "color": "#7f8d89"
+      "color": "#4e5780"
     }]
   },
   {
     "featureType": "road.local",
     "elementType": "geometry.stroke",
     "stylers": [{
-      "color": "#7f8d89"
+      "color": "#4e5780"
     }]
   },
   {

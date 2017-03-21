@@ -12,7 +12,7 @@ export default {
   /**
    * Default zoom of 16 allows user to see streets.
    */
-  zoom: 18,
+  zoom: 16,
 
   /**
    * Further than 14 shows more than just the current
@@ -23,14 +23,14 @@ export default {
   /**
    * See styles file for info on styles.
    */
-  styles: require('./styles/hybrid'),
+  styles: require('./styles/roadmap'),
 
   /**
    * The combination of these two properties allows
    * a much more interesting view.
    */
-  mapTypeId: 'hybrid',
-  tilt: 45,
+  //mapTypeId: 'hybrid',
+  //tilt: 45,
 
   /**
    * Gets rid of the UI provided by Google Maps, with

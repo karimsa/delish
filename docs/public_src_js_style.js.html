@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>public/src/js/controllers/map.js - Documentation</title>
+    <title>public/src/js/style.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -28,7 +28,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">public/src/js/controllers/map.js</h1>
+    <h1 class="page-title">public/src/js/style.js</h1>
     
 
     
@@ -39,66 +39,47 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * @file public/src/js/controllers/map.js
+ * @file public/src/js/style.js
  * @author Karim Alibhai
  * @license MIT
  * @copyright Karim Alibhai 2017
  */
 /**
- * Controller to manage the Google Map instance.
- * @module MapCtl
+ * Tiny version of swirl.js
+ * @module style
  */
 
-import sock from '../socket'
-import debounce from 'debounce'
-import { getFirstLocation } from '../location'
-import { getMapWhenReady, getMap } from '../map'
+import requestAnimationFrame from './raf'
 
 /**
- * Factory to create the map controller.
- * @param {Function} ready a callback to call when the map is ready
- * @returns {Array} array of dependencies ending with the angular controller factory
+ * Control CSS in JS.
  */
-export default ready => [() => {
-  /**
-   * Executes a nearby search using params.
-   * @param {LatLngLiteral} latlng an object literal with latitutde and longitude
-   * @param {Number} latlng.lat the latitude of the literal
-   * @param {Number} latlng.lng the longitude of the literal
-   */
-  const getNearby = debounce(() => {
-    const { lat, lng } = getMap().center()
+export default class Style {
+  constructor (selector, css) {
+    this.selector = selector
+    this.css = css
+    this.style = document.createElement('style')
+    document.body.appendChild(this.style)
+    this.render()
+  }
 
-    sock.emit('nearby', {
-      lat,
-      lng,
-      radius: getMap().radius()
-    })
-  }, 300)
+  set (key, value) {
+    this.css[key] = value
+    return this
+  }
 
-  /**
-   * Handle nearby search results.
-   */
-  sock.on('nearby:results', results =>
-    results.map(spot => getMap().plot(spot))
-  )
+  eval (value) {
+    return typeof value === 'function' ? value() : value
+  }
 
-  /**
-   * Attach the marker mapping function to changes in
-   * the map's position.
-   */
-  getMap()
-    .onMap('zoom_changed', getNearby)
-    .onMap('dragend', getNearby)
+  render () {
+    this.style.innerText = `${this.selector} {${Object.keys(this.css).map(key =>
+      `${key}: ${this.eval(this.css[key])};`
+    ).join('')}}`
 
-  // init the map
-  getFirstLocation(() =>
-    getMapWhenReady(() => {
-      ready()
-      setTimeout(getNearby, 0)
-    })
-  )
-}]</code></pre>
+    requestAnimationFrame(() => this.render())
+  }
+}</code></pre>
         </article>
     </section>
 

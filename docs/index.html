@@ -23,7 +23,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="module-map-Map.html">Map</a><ul class='methods'><li data-type='method'><a href="module-map-Map.html#center">center</a></li><li data-type='method'><a href="module-map-Map.html#on">on</a></li><li data-type='method'><a href="module-map-Map.html#plot">plot</a></li><li data-type='method'><a href="module-map-Map.html#radius">radius</a></li><li data-type='method'><a href="module-map-Map.html#zoom">zoom</a></li></ul></li><li><a href="module-map-Spot.html">Spot</a></li></ul><h3>Modules</h3><ul><li><a href="module-createApp.html">createApp</a></li><li><a href="module-location.html">location</a><ul class='methods'><li data-type='method'><a href="module-location.html#.getCurrentLocation">getCurrentLocation</a></li><li data-type='method'><a href="module-location.html#.getFirstLocation">getFirstLocation</a></li><li data-type='method'><a href="module-location.html#.getLocationAlways">getLocationAlways</a></li></ul></li><li><a href="module-logger.html">logger</a><ul class='methods'><li data-type='method'><a href="module-logger.html#.failOnce">failOnce</a></li><li data-type='method'><a href="module-logger.html#~_log">_log</a></li><li data-type='method'><a href="module-logger.html#~logLater">logLater</a></li></ul></li><li><a href="module-map.html">map</a><ul class='methods'><li data-type='method'><a href="module-map.html#~getDistance">getDistance</a></li><li data-type='method'><a href="module-map.html#~simpleLatLng">simpleLatLng</a></li><li data-type='method'><a href="module-map.html#~spotID">spotID</a></li></ul></li><li><a href="module-MapCtl.html">MapCtl</a></li><li><a href="module-search_autocomplete.html">search/autocomplete</a></li><li><a href="module-SearchCtl.html">SearchCtl</a></li><li><a href="module-socket.html">socket</a></li></ul><h3>Global</h3><ul><li><a href="global.html#mapReady">mapReady</a></li><li><a href="global.html#next">next</a></li><li><a href="global.html#ParamTypes">ParamTypes</a></li><li><a href="global.html#places">places</a></li><li><a href="global.html#tasks">tasks</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="module-map-Map.html">Map</a><ul class='methods'><li data-type='method'><a href="module-map-Map.html#center">center</a></li><li data-type='method'><a href="module-map-Map.html#draw">draw</a></li><li data-type='method'><a href="module-map-Map.html#filter">filter</a></li><li data-type='method'><a href="module-map-Map.html#getActive">getActive</a></li><li data-type='method'><a href="module-map-Map.html#onMap">onMap</a></li><li data-type='method'><a href="module-map-Map.html#plot">plot</a></li><li data-type='method'><a href="module-map-Map.html#radius">radius</a></li><li data-type='method'><a href="module-map-Map.html#setActive">setActive</a></li><li data-type='method'><a href="module-map-Map.html#zoom">zoom</a></li></ul></li><li><a href="module-map-Spot.html">Spot</a></li><li><a href="module-style.html">style</a></li></ul><h3>Modules</h3><ul><li><a href="module-createApp.html">createApp</a></li><li><a href="module-createMarker.html">createMarker</a><ul class='methods'><li data-type='method'><a href="module-createMarker.html#~createMarker">createMarker</a></li></ul></li><li><a href="module-DetailsCtl.html">DetailsCtl</a></li><li><a href="module-location.html">location</a><ul class='methods'><li data-type='method'><a href="module-location.html#.getCurrentLocation">getCurrentLocation</a></li><li data-type='method'><a href="module-location.html#.getFirstLocation">getFirstLocation</a></li><li data-type='method'><a href="module-location.html#.getLocationAlways">getLocationAlways</a></li><li data-type='method'><a href="module-location.html#~success">success</a></li></ul></li><li><a href="module-logger.html">logger</a><ul class='methods'><li data-type='method'><a href="module-logger.html#.failOnce">failOnce</a></li><li data-type='method'><a href="module-logger.html#~_log">_log</a></li><li data-type='method'><a href="module-logger.html#~logLater">logLater</a></li></ul></li><li><a href="module-map.html">map</a><ul class='methods'><li data-type='method'><a href="module-map.html#~getDistance">getDistance</a></li><li data-type='method'><a href="module-map.html#~simpleLatLng">simpleLatLng</a></li><li data-type='method'><a href="module-map.html#~spotID">spotID</a></li></ul></li><li><a href="module-MapCtl.html">MapCtl</a></li><li><a href="module-requestAnimationFrame.html">requestAnimationFrame</a></li><li><a href="module-search_autocomplete.html">search/autocomplete</a></li><li><a href="module-SearchCtl.html">SearchCtl</a></li><li><a href="module-socket.html">socket</a></li><li><a href="module-style.html">style</a></li></ul><h3>Global</h3><ul><li><a href="global.html#details">details</a></li><li><a href="global.html#getPhoto">getPhoto</a></li><li><a href="global.html#mapReady">mapReady</a></li><li><a href="global.html#next">next</a></li><li><a href="global.html#ParamTypes">ParamTypes</a></li><li><a href="global.html#places">places</a></li><li><a href="global.html#tasks">tasks</a></li></ul>
 </nav>
 
 <div id="main">
@@ -695,6 +695,112 @@
 <header>
     
         <h2>
+        public/src/js/controllers/details.js
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">public/src/js/controllers/details.js</div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Karim Alibhai</li>
+        </ul>
+    </dd>
+    
+
+    
+    <dt class="tag-copyright">Copyright:</dt>
+    <dd class="tag-copyright"><ul class="dummy"><li>Karim Alibhai 2017</li></ul></dd>
+    
+
+    
+    <dt class="tag-license">License:</dt>
+    <dd class="tag-license"><ul class="dummy"><li>MIT</li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="public_src_js_controllers_details.js.html">public/src/js/controllers/details.js</a>, <a href="public_src_js_controllers_details.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
         public/src/js/controllers/map.js
         </h2>
         
@@ -860,6 +966,218 @@
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
         <a href="public_src_js_controllers_search.js.html">public/src/js/controllers/search.js</a>, <a href="public_src_js_controllers_search.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        public/src/js/factories/details.js
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Global details object.</div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Karim Alibhai</li>
+        </ul>
+    </dd>
+    
+
+    
+    <dt class="tag-copyright">Copyright:</dt>
+    <dd class="tag-copyright"><ul class="dummy"><li>Karim Alibhai 2017</li></ul></dd>
+    
+
+    
+    <dt class="tag-license">License:</dt>
+    <dd class="tag-license"><ul class="dummy"><li>MIT</li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="public_src_js_factories_details.js.html">public/src/js/factories/details.js</a>, <a href="public_src_js_factories_details.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        public/src/js/factories/review.js
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Global details object.</div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Karim Alibhai</li>
+        </ul>
+    </dd>
+    
+
+    
+    <dt class="tag-copyright">Copyright:</dt>
+    <dd class="tag-copyright"><ul class="dummy"><li>Karim Alibhai 2017</li></ul></dd>
+    
+
+    
+    <dt class="tag-license">License:</dt>
+    <dd class="tag-license"><ul class="dummy"><li>MIT</li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="public_src_js_factories_review.js.html">public/src/js/factories/review.js</a>, <a href="public_src_js_factories_review.js.html#line1">line 1</a>
     </li></ul></dd>
     
 
@@ -1437,6 +1755,218 @@
 <header>
     
         <h2>
+        public/src/js/marker.js
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">public/src/js/marker.js</div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Karim Alibhai</li>
+        </ul>
+    </dd>
+    
+
+    
+    <dt class="tag-copyright">Copyright:</dt>
+    <dd class="tag-copyright"><ul class="dummy"><li>Karim Alibhai 2017</li></ul></dd>
+    
+
+    
+    <dt class="tag-license">License:</dt>
+    <dd class="tag-license"><ul class="dummy"><li>MIT</li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="public_src_js_marker.js.html">public/src/js/marker.js</a>, <a href="public_src_js_marker.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        public/src/js/raf.js
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">public/src/js/raf.js</div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Karim Alibhai</li>
+        </ul>
+    </dd>
+    
+
+    
+    <dt class="tag-copyright">Copyright:</dt>
+    <dd class="tag-copyright"><ul class="dummy"><li>Karim Alibhai 2017</li></ul></dd>
+    
+
+    
+    <dt class="tag-license">License:</dt>
+    <dd class="tag-license"><ul class="dummy"><li>MIT</li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="public_src_js_raf.js.html">public/src/js/raf.js</a>, <a href="public_src_js_raf.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
         public/src/js/setup.js
         </h2>
         
@@ -1649,6 +2179,112 @@
 <header>
     
         <h2>
+        public/src/js/style.js
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">public/src/js/style.js</div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Karim Alibhai</li>
+        </ul>
+    </dd>
+    
+
+    
+    <dt class="tag-copyright">Copyright:</dt>
+    <dd class="tag-copyright"><ul class="dummy"><li>Karim Alibhai 2017</li></ul></dd>
+    
+
+    
+    <dt class="tag-license">License:</dt>
+    <dd class="tag-license"><ul class="dummy"><li>MIT</li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="public_src_js_style.js.html">public/src/js/style.js</a>, <a href="public_src_js_style.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
         public/src/js/track.js
         </h2>
         
@@ -1752,7 +2388,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Mon Mar 20 2017 13:04:58 GMT-0400 (EDT) using the Minami theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Tue Mar 21 2017 06:30:21 GMT-0400 (EDT) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>

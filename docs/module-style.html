@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>public/src/js/controllers/map.js - Documentation</title>
+    <title>module:style - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -28,79 +28,132 @@
 
 <div id="main">
     
-    <h1 class="page-title">public/src/js/controllers/map.js</h1>
+    <h1 class="page-title">module:style</h1>
     
 
     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>/**
- * @file public/src/js/controllers/map.js
- * @author Karim Alibhai
- * @license MIT
- * @copyright Karim Alibhai 2017
- */
-/**
- * Controller to manage the Google Map instance.
- * @module MapCtl
- */
+        <h2>
+        module:style
+        </h2>
+        
+            <div class="class-description">Control CSS in JS.</div>
+        
+    
+</header>
 
-import sock from '../socket'
-import debounce from 'debounce'
-import { getFirstLocation } from '../location'
-import { getMapWhenReady, getMap } from '../map'
+<article>
+    <div class="container-overview">
+    
+        
 
-/**
- * Factory to create the map controller.
- * @param {Function} ready a callback to call when the map is ready
- * @returns {Array} array of dependencies ending with the angular controller factory
- */
-export default ready => [() => {
-  /**
-   * Executes a nearby search using params.
-   * @param {LatLngLiteral} latlng an object literal with latitutde and longitude
-   * @param {Number} latlng.lat the latitude of the literal
-   * @param {Number} latlng.lng the longitude of the literal
-   */
-  const getNearby = debounce(() => {
-    const { lat, lng } = getMap().center()
+    
+    <h2>Constructor</h2>
+    
 
-    sock.emit('nearby', {
-      lat,
-      lng,
-      radius: getMap().radius()
-    })
-  }, 300)
+    <h4 class="name" id="module:style"><span class="type-signature"></span>new module:style<span class="signature">()</span><span class="type-signature"></span></h4>
 
-  /**
-   * Handle nearby search results.
-   */
-  sock.on('nearby:results', results =>
-    results.map(spot => getMap().plot(spot))
-  )
+    
 
-  /**
-   * Attach the marker mapping function to changes in
-   * the map's position.
-   */
-  getMap()
-    .onMap('zoom_changed', getNearby)
-    .onMap('dragend', getNearby)
 
-  // init the map
-  getFirstLocation(() =>
-    getMapWhenReady(() => {
-      ready()
-      setTimeout(getNearby, 0)
-    })
-  )
-}]</code></pre>
-        </article>
-    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="public_src_js_style.js.html">public/src/js/style.js</a>, <a href="public_src_js_style.js.html#line17">line 17</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

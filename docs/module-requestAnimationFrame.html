@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>public/src/js/controllers/map.js - Documentation</title>
+    <title>requestAnimationFrame - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -28,79 +28,127 @@
 
 <div id="main">
     
-    <h1 class="page-title">public/src/js/controllers/map.js</h1>
+    <h1 class="page-title">requestAnimationFrame</h1>
     
 
     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>/**
- * @file public/src/js/controllers/map.js
- * @author Karim Alibhai
- * @license MIT
- * @copyright Karim Alibhai 2017
- */
-/**
- * Controller to manage the Google Map instance.
- * @module MapCtl
- */
+        
+            
+        
+    
+</header>
 
-import sock from '../socket'
-import debounce from 'debounce'
-import { getFirstLocation } from '../location'
-import { getMapWhenReady, getMap } from '../map'
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Vender prefix fallbacks and polyfill for requestAnimationFrame.</div>
+        
 
-/**
- * Factory to create the map controller.
- * @param {Function} ready a callback to call when the map is ready
- * @returns {Array} array of dependencies ending with the angular controller factory
- */
-export default ready => [() => {
-  /**
-   * Executes a nearby search using params.
-   * @param {LatLngLiteral} latlng an object literal with latitutde and longitude
-   * @param {Number} latlng.lat the latitude of the literal
-   * @param {Number} latlng.lng the longitude of the literal
-   */
-  const getNearby = debounce(() => {
-    const { lat, lng } = getMap().center()
+        
+            
 
-    sock.emit('nearby', {
-      lat,
-      lng,
-      radius: getMap().radius()
-    })
-  }, 300)
 
-  /**
-   * Handle nearby search results.
-   */
-  sock.on('nearby:results', results =>
-    results.map(spot => getMap().plot(spot))
-  )
 
-  /**
-   * Attach the marker mapping function to changes in
-   * the map's position.
-   */
-  getMap()
-    .onMap('zoom_changed', getNearby)
-    .onMap('dragend', getNearby)
 
-  // init the map
-  getFirstLocation(() =>
-    getMapWhenReady(() => {
-      ready()
-      setTimeout(getNearby, 0)
-    })
-  )
-}]</code></pre>
-        </article>
-    </section>
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="public_src_js_raf.js.html">public/src/js/raf.js</a>, <a href="public_src_js_raf.js.html#line7">line 7</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 
